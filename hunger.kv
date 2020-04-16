@@ -1,0 +1,25 @@
+#:import Factory kivy.factory.Factory
+
+
+<UIManager>:
+    loading_popup: Factory.LoadingPopup()
+    canvas:
+        Color:
+            rgba: 149 / 255, 255 / 255 , 53 / 255, 1
+        Rectangle:
+            size: root.size
+            pos: root.pos
+            source: "sources/wood.png"
+    MainScreen:
+
+<LoadingPopup@Popup>:
+    title: "Loading"
+    auto_dismiss: False
+    size_hint: 0.5, 0.2
+    BoxLayout:
+        Label:
+            text: "Loading..."
+
+<Screen>:
+    on_enter: root.manager.loading_popup.dismiss()
+    on_pre_leave: root.manager.loading_popup.open()
