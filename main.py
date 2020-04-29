@@ -6,8 +6,8 @@ from kivy.config import Config
 from kivy.core.window import Window
 
 Config.set('graphics', 'fullscreen', '0')
-Config.set('graphics', 'width', '400')
-Config.set('graphics', 'height', '600')
+Config.set('graphics', 'width', '320')
+Config.set('graphics', 'height', '568')
 Config.write()
 
 Factory.register("MainScreen", module="classes.mainscreen")

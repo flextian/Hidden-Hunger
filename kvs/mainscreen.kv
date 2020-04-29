@@ -1,14 +1,34 @@
 <MainScreen>:
     name: "main_screen"
-    AnchorLayout:
-        BoxLayout:
-            orientation: "vertical"
-            size_hint: 0.5, 0.5
-            GridLayout:
-                pos_hint: {"center_x": 0.5}
-                size_hint_x: 0.35
-                cols: 2
+    BoxLayout:
+        orientation: 'vertical'
+        AnchorLayout:
+            size_hint: 1, 0.7
+            Label:
+                font_size: self.height / 4
+                text: "Hidden Hunger"
+        AnchorLayout:
+            BoxLayout:
+                orientation: 'vertical'
+                size_hint: 0.8, 0.7
+                spacing: dp(8)
+                AnchorLayout:
+                    Label:
+                        font_size: self.height
+                        text: 'Zip Code:'
+                AnchorLayout:
+                    TextInput:
+                AnchorLayout:
+                    Button:
+                        size_hint: 0.5, 1
+                        text: 'Submit'
+        AnchorLayout:
+            BoxLayout:
+                orientation: 'vertical'
+                size_hint: 0.8, 0.5
                 Label:
-                    text: "Hidden Hunger"
-                    font_size: "25dp"
-                    markup: True
+                    font_size: self.height / 3
+                    text: 'Distance (in miles):'
+                Spinner:
+                    text: '5'
+                    values: '5', '15', '30', '50'
