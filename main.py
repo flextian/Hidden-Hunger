@@ -12,6 +12,8 @@ Config.write()
 
 Factory.register("MainScreen", module="classes.mainscreen")
 Builder.load_file("kvs/mainscreen.kv")
+Factory.register("MapScreen", module="classes.mapscreen")
+Builder.load_file("kvs/mapscreen.kv")
 
 
 class UIManager(ScreenManager):
@@ -25,7 +27,7 @@ class HungerApp(App):
         super().__init__(**kwargs)
 
     def build(self):
-        self.title = "Hungry Hippos"
+        self.title = "Caring Cranes"
         return UIManager()
 
 

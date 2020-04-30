@@ -18,10 +18,13 @@
                         text: 'Zip Code:'
                 AnchorLayout:
                     TextInput:
+                        id: zip_code
                 AnchorLayout:
                     Button:
                         size_hint: 0.5, 1
                         text: 'Submit'
+                        on_release: root.manager.current = "map_screen"
+
         AnchorLayout:
             BoxLayout:
                 orientation: 'vertical'

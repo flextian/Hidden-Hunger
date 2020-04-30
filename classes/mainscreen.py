@@ -1,5 +1,4 @@
-from kivy.uix.button import Button
-from kivy.uix.dropdown import DropDown
+from kivy.app import App
 from kivy.uix.screenmanager import Screen
 
 
