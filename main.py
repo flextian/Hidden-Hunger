@@ -1,9 +1,9 @@
 from kivy.app import App
+from kivymd.app import MDApp
 from kivy.factory import Factory
 from kivy.lang import Builder
 from kivy.uix.screenmanager import FadeTransition, ScreenManager
 from kivy.config import Config
-from kivy.core.window import Window
 
 Config.set('graphics', 'fullscreen', '0')
 Config.set('graphics', 'width', '320')
@@ -22,7 +22,7 @@ class UIManager(ScreenManager):
         self.transition = FadeTransition()
 
 
-class HungerApp(App):
+class HungerApp(MDApp):
     def __init__(self, **kwargs):
         super().__init__(**kwargs)
 
