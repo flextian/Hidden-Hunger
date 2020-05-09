@@ -1,2 +1,25 @@
-<ResultsScreen>:
+<FoodbankIcon@MDCard>
+    size_hint_y: None
+    size: 100, '100'
+
+<ResultsScreen>
     name: "results_screen"
+    BoxLayout:
+        orientation: "vertical"
+        MDToolbar:
+            title: "Results"
+            left_action_items: [['arrow-left', lambda x: root.go_back()]]
+        ScrollView:
+
+            MDBoxLayout:
+                id: 'bank_icons'
+                adaptive_height: True
+                orientation: 'vertical'
+                spacing: '30dp'
+                padding: '30dp'
+
+                FoodbankIcon:
+                FoodbankIcon:
+                FoodbankIcon:
+                FoodbankIcon:
+                FoodbankIcon:
