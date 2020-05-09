@@ -4,24 +4,37 @@
         orientation: 'vertical'
         AnchorLayout:
             size_hint: 1, 0.7
-            Label:
-                font_size: self.height / 4
+            MDLabel:
+                font_size: self.height / 3
                 text: "Hidden Hunger"
+                font_style: 'H1'
+                halign: 'center'
         AnchorLayout:
             BoxLayout:
                 orientation: 'vertical'
                 size_hint: 0.8, 0.7
                 spacing: dp(8)
                 AnchorLayout:
-                    Label:
+                    MDLabel:
                         font_size: self.height
-                        text: 'Zip Code:'
+                        text: 'Enter Your Zip Code:'
+                        font_style: 'H3'
+                        halign: 'center'
+                        font_size: self.height / 2
                 AnchorLayout:
-                    TextInput:
+                    MDTextField:
+                        hint_text: "Zip Code"
+                        mode: "rectangle"
                         id: zip_code
+                        input_filter: 'int'
+                        size_hint: 0.8, None
+                        max_text_length: 5
                 AnchorLayout:
-                    Button:
-                        size_hint: 0.5, 1
+                    MDRaisedButton:
+                        size_hint: 0.6, 1
+                        elevation_normal: 2
+                        opposite_colors: True
+                        pos_hint: {'center_x': .5}
                         text: 'Submit'
                         on_release: root.manager.current = "results_screen"
 
@@ -29,10 +42,14 @@
             BoxLayout:
                 orientation: 'vertical'
                 size_hint: 0.8, 0.5
-                Label:
+                MDLabel:
+                    font_style: 'H3'
+                    theme_text_color: 'Primary'
+                    halign: 'center'
                     font_size: self.height / 3
                     text: 'Distance (in miles):'
-                Spinner:
+                MDDropDownItem:
                     id: distance
-                    text: '5'
-                    values: '5', '15', '30', '50', "All"
+                    pos_hint: {'center_x': .5, 'center_y': .5}
+                    text: 'Item'
+                    on_release: root.open_dropdown()
