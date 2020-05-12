@@ -22,7 +22,6 @@ class MainScreen(Screen):
         self.ids.distance.set_item(instance.text)
         Clock.schedule_once(lambda _: self.dropdown_menu.dismiss(), 0.3)
 
-
     def open_dropdown(self):
         print('pressed!')
         self.dropdown_menu.open()
