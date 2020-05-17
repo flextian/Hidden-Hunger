@@ -8,17 +8,22 @@ from kivymd.uix.label import MDLabel
 
 
 class FoodbankIcon(MDCard):
-    def __init__(self, info, **kwargs):
+    def __init__(self, info, manager, **kwargs):
         super().__init__(**kwargs)
+        self.info = info
+        self.manager = manager
 
         title = MDLabel(text=info[1], font_style='H3', halign='center')
-        background_button = Button(background_color=[0,0,0,0])
+        background_button = Button(background_color=[0, 0, 0, 0], on_release=self.enter_info_screen)
 
         anchor = AnchorLayout()
         anchor.add_widget(background_button)
         anchor.add_widget(title)
 
         self.add_widget(anchor)
+
+    def enter_info_screen(self, _):
+        self.manager.current = 'info_screen'
 
 
 class ResultsScreen(Screen):
@@ -42,7 +47,7 @@ class ResultsScreen(Screen):
         records = cursor.fetchall()
         for row in records:
             print(row)
-            card = FoodbankIcon(row)
+            card = FoodbankIcon(row, self.manager)
             self.ids.bank_icons.add_widget(card)
 
     def go_back(self):

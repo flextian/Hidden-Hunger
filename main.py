@@ -14,6 +14,8 @@ Factory.register("MainScreen", module="classes.mainscreen")
 Builder.load_file("kvs/mainscreen.kv")
 Factory.register("ResultsScreen", module="classes.resultsscreen")
 Builder.load_file("kvs/resultsscreen.kv")
+Factory.register("InfoScreen", module="classes.infoscreen")
+Builder.load_file("kvs/infoscreen.kv")
 
 
 class UIManager(ScreenManager):
