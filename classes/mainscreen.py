@@ -1,6 +1,4 @@
-from kivy.app import App
 from kivy.clock import Clock
-from kivy.lang import Builder
 from kivy.uix.screenmanager import Screen
 from kivymd.uix.menu import MDDropdownMenu
 
@@ -14,10 +12,11 @@ class MainScreen(Screen):
     def create_dropdown_menu(self):
         menu_items = [{"text": "All"}, {"text": "50"}, {"text": "30"}, {"text": "15"}, {"text": "10"}, {"text": "5"}]
         self.dropdown_menu = MDDropdownMenu(
-            caller=self.ids.distance, items=menu_items, width_mult=4, callback=self.set_item
+            caller=self.ids.distance, items=menu_items, width_mult=4, callback=self.set_item, position='auto'
         )
         print('dropdown created!')
 
+    #TODO: Fix the fact that if you spam the button you crash the program.
     def set_item(self, instance):
         self.ids.distance.set_item(instance.text)
         Clock.schedule_once(lambda _: self.dropdown_menu.dismiss(), 0.3)
