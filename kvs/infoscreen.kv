@@ -83,7 +83,8 @@
     radius: [25, 0, 0, 0]
 
     MinHeightLabel:
-        text: "Blue Bottle Coffee"
+        id: title
+        text: "Title"
         text_color: root.specific_text_color
         font_style: "Body2"
         bold: True
@@ -165,6 +166,7 @@
     orientation: "vertical"
 
     TitleBox:
+        id: title_box
 
     ButtonsBox:
 
@@ -196,7 +198,19 @@
         height: root.height / 100 * 35
         pos_hint: {"top": 1}
 
+    AnchorLayout:
+        anchor_x: 'left'
+        anchor_y: 'top'
+        MDIconButton:
+            icon: 'arrow-left'
+            theme_text_color: "Custom"
+            text_color: 1, 1, 1, 1
+            on_release:
+                root.go_back()
+
+
     CenterPanel:
+        id: center_panel
         y: -box.height + dp(25)
 
     MDFloatingActionButton:
