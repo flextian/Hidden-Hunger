@@ -2,4 +2,5 @@ from kivy.uix.screenmanager import Screen
 
 
 class InfoScreen(Screen):
-    pass
+    def on_enter(self, *args):
+        pass

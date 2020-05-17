@@ -1,2 +1,207 @@
+#:import get_hex_from_color kivy.utils.get_hex_from_color
+#:import OneLineAvatarListItem kivymd.uix.list.OneLineAvatarListItem
+#:import Snackbar kivymd.uix.snackbar.Snackbar
+
+#------------------------------------------------------------------------------
+
+<IconStar@MDIconButton+SpecificBackgroundColorBehavior>
+    theme_text_color: "Custom"
+    text_color: root.specific_text_color
+    user_font_size: "14sp"
+
+#------------------------------------------------------------------------------
+
+<IconLeft@IconLeftWidget>
+    icon: root.icon
+    theme_text_color: "Custom"
+    text_color: app.theme_cls.primary_color
+    user_font_size: "20sp"
+    pos_hint: {"center_y": .5}
+
+#------------------------------------------------------------------------------
+
+<OneLineItem@OneLineAvatarListItem>
+    icon: ""
+    font_style: "Caption"
+    height: "40dp"
+    _txt_bot_pad: "12dp"
+
+    IconLeft:
+        icon: root.icon
+
+#------------------------------------------------------------------------------
+
+<TwoLineItem@TwoLineIconListItem>
+    icon: ""
+    font_style: "Caption"
+    secondary_font_style: "Caption"
+    height: "64dp"
+    _txt_bot_pad: "16dp"
+
+    IconLeft:
+        icon: root.icon
+
+#------------------------------------------------------------------------------
+
+<MinHeightLabel@MDLabel>
+    size_hint_y: None
+    height: self.texture_size[1]
+    theme_text_color: "Custom"
+    font_style: "Caption"
+    shorten: True
+
+#------------------------------------------------------------------------------
+
+<IconButton@MDBoxLayout>
+    orientation: "vertical"
+    adaptive_size: True
+    spacing: "8dp"
+    icon: ""
+    text: ""
+
+    MDIconButton:
+        icon: root.icon
+        theme_text_color: "Custom"
+        text_color: app.theme_cls.primary_color
+        user_font_size: "24sp"
+
+    MDLabel:
+        text: root.text
+        font_style: "Overline"
+        theme_text_color: "Custom"
+        text_color: app.theme_cls.primary_color
+        halign: "center"
+        bold: True
+
+#------------------------------------------------------------------------------
+
+<TitleBox@MDBoxLayout>
+    orientation: "vertical"
+    adaptive_height: True
+    md_bg_color: app.theme_cls.primary_color
+    padding: "24dp", "18dp", "24dp", "12dp"
+    radius: [25, 0, 0, 0]
+
+    MinHeightLabel:
+        text: "Blue Bottle Coffee"
+        text_color: root.specific_text_color
+        font_style: "Body2"
+        bold: True
+
+    MDBoxLayout:
+        adaptive_height: True
+
+        MinHeightLabel:
+            text: "4.6"
+            text_color: root.specific_text_color
+            pos_hint: {"center_y": .5}
+            size_hint_x: None
+            width: "24dp"
+            bold: True
+
+        IconStar:
+            icon: "star"
+
+        IconStar:
+            icon: "star"
+
+        IconStar:
+            icon: "star-outline"
+
+        MinHeightLabel:
+            text: "359 reviews • $"
+            text_color: root.specific_text_color
+            pos_hint: {"center_y": .5}
+            halign: "right"
+
+    MinHeightLabel:
+        text: "Coffee Shop"
+        text_color: root.specific_text_color
+        pos_hint: {"center_y": .5}
+
+#------------------------------------------------------------------------------
+
+<ButtonsBox@MDBoxLayout>
+    adaptive_size: True
+    pos_hint: {"center_x": .5}
+    spacing: "36dp"
+    padding: "24dp", 0, "24dp", "24dp"
+
+    IconButton:
+        icon: "phone"
+        text: "Call"
+
+    IconButton:
+        icon: "star"
+        text: "Save"
+
+    IconButton:
+        icon: "web"
+        text: "Website"
+
+#------------------------------------------------------------------------------
+
+<ListBox@ScrollView>
+
+    MDList:
+
+        OneLineItem:
+            text: "315 Linden St, San Francisco, CA 94102"
+            icon: "map-marker"
+
+        OneLineItem:
+            text: "Open today: [color={}]7:00 AM - 6:00 PM[/color]".format(get_hex_from_color(self.theme_cls.primary_color))
+            icon: "history"
+
+        TwoLineItem:
+            text: "Two-line item with avatar"
+            secondary_text: "Secondary text here"
+            icon: "food"
+            on_release: Snackbar(text="This is a snackbar!", padding="20dp", button_text="ACTION", button_color=(1, 0, 1, 1)).show()
+
+#------------------------------------------------------------------------------
+
+<CenterPanel@MDBoxLayout>
+    orientation: "vertical"
+
+    TitleBox:
+
+    ButtonsBox:
+
+    MDSeparator:
+
+    MDBoxLayout:
+        adaptive_height: True
+        padding: "12dp"
+
+        MinHeightLabel:
+            text:
+                "Trendy cafe chain offering upscale coffee drink & pastries, " \
+                "plus beans & brewing equipment"
+            italic: True
+            shorten: False
+
+    MDSeparator:
+
+    ListBox:
+
+
 <InfoScreen>:
     name: "info_screen"
+
+    FitImage:
+        id: box
+        source: "sources/wood.png"
+        size_hint_y: None
+        height: root.height / 100 * 35
+        pos_hint: {"top": 1}
+
+    CenterPanel:
+        y: -box.height + dp(25)
+
+    MDFloatingActionButton:
+        id: button_car
+        md_bg_color: 1, 1, 1, 1
+        icon: "car"
+        y: (box.y - self.height / 2) + dp(25)
+        x: root.width - self.width - dp(32)
