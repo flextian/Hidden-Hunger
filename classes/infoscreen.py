@@ -20,7 +20,7 @@ class InfoScreen(Screen):
         15 = distance in miles
         '''
         self.url = None
-
+        self.phone_number = None
 
     def on_enter(self, *args):
         self.info = MDApp.get_running_app().row
@@ -29,10 +29,34 @@ class InfoScreen(Screen):
         self.ids.center_panel.ids.information.text = self.info[14]
         self.ids.center_panel.ids.title_box.ids.distance.text = str(self.info[15]) + " Miles Away"
 
+        # Disables the website button if there is no website
         self.url = self.info[4]
+        if self.url is None:
+            self.ids.center_panel.ids.buttons_box.ids.website_container.ids.website_button.disabled = True
+            self.ids.center_panel.ids.buttons_box.ids.website_container.ids.website_button_text.text_color = \
+                MDApp.get_running_app().theme_cls.disabled_hint_text_color
+        else:
+            self.ids.center_panel.ids.buttons_box.ids.website_container.ids.website_button.disabled = False
+            self.ids.center_panel.ids.buttons_box.ids.website_container.ids.website_button_text.text_color = \
+                MDApp.get_running_app().theme_cls.primary_color
+
+        # Disables the call button if there is no phone number
+        self.phone_number = self.info[3]
+        if self.phone_number is None:
+            self.ids.center_panel.ids.buttons_box.ids.call_container.ids.call_button.disabled = True
+            self.ids.center_panel.ids.buttons_box.ids.call_container.ids.call_button_text.text_color = \
+                MDApp.get_running_app().theme_cls.disabled_hint_text_color
+        else:
+            self.ids.center_panel.ids.buttons_box.ids.call_container.ids.call_button.disabled = False
+            self.ids.center_panel.ids.buttons_box.ids.call_container.ids.call_button_text.text_color = \
+                MDApp.get_running_app().theme_cls.primary_color
 
     def open_url(self):
         print('opened url')
+        webbrowser.open(self.url)
+
+    def call_number(self):
+        print('calling')
 
     def go_back(self):
         self.manager.current = 'results_screen'

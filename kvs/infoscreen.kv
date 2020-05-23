@@ -1,6 +1,7 @@
 #:import get_hex_from_color kivy.utils.get_hex_from_color
 #:import OneLineAvatarListItem kivymd.uix.list.OneLineAvatarListItem
 #:import Snackbar kivymd.uix.snackbar.Snackbar
+#:import Clipboard kivy.core.clipboard.Clipboard
 
 #------------------------------------------------------------------------------
 
@@ -20,6 +21,21 @@
 
 #------------------------------------------------------------------------------
 
+<OneLineItemAddress@OneLineAvatarListItem>
+    icon: ""
+    on_release:
+        Clipboard.copy(root.text)
+        Snackbar(text="Copied to Clipboard!").show()
+
+    font_style: "Caption"
+    height: "40dp"
+    _txt_bot_pad: "12dp"
+
+    IconLeft:
+        icon: root.icon
+
+#------------------------------------------------------------------------------
+
 <OneLineItem@OneLineAvatarListItem>
     icon: ""
     font_style: "Caption"
@@ -28,6 +44,7 @@
 
     IconLeft:
         icon: root.icon
+
 
 #------------------------------------------------------------------------------
 
@@ -52,7 +69,7 @@
 
 #------------------------------------------------------------------------------
 
-<IconButton@MDBoxLayout>
+<IconButtonWebsite@MDBoxLayout>
     orientation: "vertical"
     adaptive_size: True
     spacing: "8dp"
@@ -60,14 +77,41 @@
     text: ""
 
     MDIconButton:
+        id: website_button
         icon: root.icon
         theme_text_color: "Custom"
         text_color: app.theme_cls.primary_color
         user_font_size: "24sp"
-        on_release:
-            app.root.get_screen('info_screen').open_url()
+        on_release: app.root.get_screen('info_screen').open_url()
 
     MDLabel:
+        id: website_button_text
+        text: root.text
+        font_style: "Overline"
+        theme_text_color: "Custom"
+        text_color: app.theme_cls.primary_color
+        halign: "center"
+        bold: True
+
+#------------------------------------------------------------------------------
+
+<IconButtonCall@MDBoxLayout>
+    orientation: "vertical"
+    adaptive_size: True
+    spacing: "8dp"
+    icon: ""
+    text: ""
+
+    MDIconButton:
+        id: call_button
+        icon: root.icon
+        theme_text_color: "Custom"
+        text_color: app.theme_cls.primary_color
+        user_font_size: "24sp"
+        on_release: app.root.get_screen('info_screen').call_number()
+
+    MDLabel:
+        id: call_button_text
         text: root.text
         font_style: "Overline"
         theme_text_color: "Custom"
@@ -105,15 +149,13 @@
     spacing: "36dp"
     padding: "24dp", 0, "24dp", "24dp"
 
-    IconButton:
+    IconButtonCall:
+        id: call_container
         icon: "phone"
         text: "Call"
 
-    IconButton:
-        icon: "star"
-        text: "Save"
-
-    IconButton:
+    IconButtonWebsite:
+        id: website_container
         icon: "web"
         text: "Website"
 
@@ -123,7 +165,7 @@
 
     MDList:
 
-        OneLineItem:
+        OneLineItemAddress:
             id: address
             text: ""
             icon: "map-marker"
@@ -131,12 +173,6 @@
         OneLineItem:
             text: "Open today: [color={}]7:00 AM - 6:00 PM[/color]".format(get_hex_from_color(self.theme_cls.primary_color))
             icon: "history"
-
-        TwoLineItem:
-            text: "Two-line item with avatar"
-            secondary_text: "Secondary text here"
-            icon: "food"
-            on_release: Snackbar(text="This is a snackbar!", padding="20dp", button_text="ACTION", button_color=(1, 0, 1, 1)).show()
 
 #------------------------------------------------------------------------------
 
