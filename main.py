@@ -27,6 +27,7 @@ class UIManager(ScreenManager):
 class HungerApp(MDApp):
     def __init__(self, **kwargs):
         super().__init__(**kwargs)
+        self.row = None
 
     def build(self):
         self.title = "Caring Cranes"
