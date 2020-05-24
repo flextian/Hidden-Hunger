@@ -1,6 +1,7 @@
 from kivy.uix.screenmanager import Screen
 from kivymd.app import MDApp
 import webbrowser
+from kivy_garden.mapview import MapMarkerPopup
 
 
 class InfoScreen(Screen):
@@ -21,6 +22,8 @@ class InfoScreen(Screen):
         '''
         self.url = None
         self.phone_number = None
+        self.map = None
+        self.marker = None
 
     def on_enter(self, *args):
         self.info = MDApp.get_running_app().row
@@ -28,6 +31,10 @@ class InfoScreen(Screen):
         self.ids.center_panel.ids.list_box.ids.address.text = self.info[2]
         self.ids.center_panel.ids.information.text = self.info[14]
         self.ids.center_panel.ids.title_box.ids.distance.text = str(self.info[15]) + " Miles Away"
+
+        self.map = self.ids.map
+        self.marker = Marker(float(self.info[12]), float(self.info[13]), self.map)
+        self.map.add_widget(self.marker)
 
         # Disables the website button if there is no website
         self.url = self.info[4]
@@ -59,4 +66,24 @@ class InfoScreen(Screen):
         print('calling')
 
     def go_back(self):
+        self.map.remove_widget(self.marker)
         self.manager.current = 'results_screen'
+
+
+class Marker(MapMarkerPopup):
+    def __init__(self, lat, lon, map_widget, **kwargs):
+        super().__init__(**kwargs)
+        self.map = map_widget
+        self.lat = lat
+        self.lon = lon
+        self.map.center_on(self.lat, self.lon)
+        self.map.zoom = 17
+        print('created')
+
+    def on_release(self, *args):
+        self.map.center_on(self.lat, self.lon)
+        current_zoom = self.map.zoom
+        print('pressed')
+        # If the map is not zoomed in close enough, the map will zoom to the marker
+        if current_zoom < 17:
+            self.map.zoom = 17
