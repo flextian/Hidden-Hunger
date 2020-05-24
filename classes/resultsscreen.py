@@ -1,4 +1,5 @@
 from kivy.uix.anchorlayout import AnchorLayout
+from kivy.uix.boxlayout import BoxLayout
 from kivy.uix.button import Button
 from kivy.uix.screenmanager import Screen
 import mysql.connector
@@ -14,12 +15,17 @@ class FoodbankIcon(MDCard):
         self.info = info
         self.manager = manager
 
-        title = MDLabel(text=info[1], font_style='H3', halign='center')
+        box_container = BoxLayout()
+        title = MDLabel(text=info[1], font_style='H6', halign='center', font_size=10)
+        distance = MDLabel(text=str(info[15]) + " Miles", font_style='H6', halign='center', font_size=10)
+        box_container.add_widget(title)
+        box_container.add_widget(distance)
+
         background_button = Button(background_color=[0, 0, 0, 0], on_release=self.enter_info_screen)
 
         anchor = AnchorLayout()
         anchor.add_widget(background_button)
-        anchor.add_widget(title)
+        anchor.add_widget(box_container)
 
         self.add_widget(anchor)
 
