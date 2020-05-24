@@ -13,6 +13,7 @@ class MainScreen(Screen):
         super().__init__(**kwargs)
         self.dropdown_menu = None
         self.zip_code = None
+        self.distance_threshold = None
         Clock.schedule_once(lambda _: self.create_dropdown_menu())
 
     def create_dropdown_menu(self):
@@ -20,6 +21,7 @@ class MainScreen(Screen):
         self.dropdown_menu = MDDropdownMenu(
             caller=self.ids.distance, items=menu_items, width_mult=4, callback=self.set_item, position='auto'
         )
+        self.ids.distance.set_item('All')
         print('dropdown created!')
 
     # TODO: Fix the fact that if you spam the button you crash the program.
@@ -35,7 +37,9 @@ class MainScreen(Screen):
     def get_results(self):
         self.manager.current = 'results_screen'
         self.zip_code = self.ids.zip_code.text
+        self.distance_threshold = self.ids.distance.current_item
         print(self.zip_code)
+        print(self.distance_threshold)
         # TODO: Make the search process asynchronous (enter the results screen first, then load)
         self.search()
 
@@ -49,6 +53,7 @@ class MainScreen(Screen):
             user="app_user",
             passwd="password"
         )
+
         query = "select * from foodbanks"
         cursor = connection.cursor()
         cursor.execute(query)
@@ -56,6 +61,14 @@ class MainScreen(Screen):
         for row in records:
             row = list(row)
             foodbank_distance = self.calculate_distance(row)
+
+            # if the distance is greater than the threshold
+            print(self.distance_threshold)
+            if self.distance_threshold is not 'All':
+                if foodbank_distance > float(self.distance_threshold):
+                    print('a foodbank just got canceled')
+                    continue
+
             row.append(foodbank_distance)
             card = FoodbankIcon(row, self.manager)
             cards.append(card)
