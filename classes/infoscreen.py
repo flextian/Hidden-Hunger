@@ -4,6 +4,8 @@ import webbrowser
 from kivy_garden.mapview import MapMarkerPopup
 
 
+# TODO: Fix the flickering in the map
+
 class InfoScreen(Screen):
     def __init__(self, **kw):
         super().__init__(**kw)

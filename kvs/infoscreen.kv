@@ -3,6 +3,7 @@
 #:import Snackbar kivymd.uix.snackbar.Snackbar
 #:import Clipboard kivy.core.clipboard.Clipboard
 #:import MapSource kivy_garden.mapview.MapSource
+#:import Window kivy.core.window.Window
 
 #------------------------------------------------------------------------------
 
@@ -215,7 +216,7 @@
         MapView:
             id: map
             size_hint_y: None
-            size: 100, center_panel.height
+            size: 100, Window.size[1] - center_panel.height + 40
 
     AnchorLayout:
         anchor_x: 'left'
