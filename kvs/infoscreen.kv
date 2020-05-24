@@ -2,6 +2,7 @@
 #:import OneLineAvatarListItem kivymd.uix.list.OneLineAvatarListItem
 #:import Snackbar kivymd.uix.snackbar.Snackbar
 #:import Clipboard kivy.core.clipboard.Clipboard
+#:import MapSource kivy_garden.mapview.MapSource
 
 #------------------------------------------------------------------------------
 
@@ -178,6 +179,8 @@
 
 <CenterPanel@MDBoxLayout>
     orientation: "vertical"
+    size_hint_y: None
+    height: self.minimum_height + 100
 
     TitleBox:
         id: title_box
@@ -207,12 +210,11 @@
 <InfoScreen>:
     name: "info_screen"
 
-    FitImage:
-        id: box
-        source: "sources/wood.png"
-        size_hint_y: None
-        height: root.height / 100 * 35
-        pos_hint: {"top": 1}
+    AnchorLayout:
+        anchor_y: 'top'
+        MapView:
+            size_hint_y: None
+            size: 100, center_panel.height
 
     AnchorLayout:
         anchor_x: 'left'
@@ -224,14 +226,12 @@
             on_release:
                 root.go_back()
 
-
     CenterPanel:
         id: center_panel
-        y: -box.height + dp(25)
 
     MDFloatingActionButton:
         id: button_car
         md_bg_color: 1, 1, 1, 1
         icon: "car"
-        y: (box.y - self.height / 2) + dp(25)
+        y: (center_panel.height - self.height / 2)
         x: root.width - self.width - dp(32)
