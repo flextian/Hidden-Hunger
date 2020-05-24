@@ -36,7 +36,8 @@
                         opposite_colors: True
                         pos_hint: {'center_x': .5}
                         text: 'Submit'
-                        on_release: root.manager.current = "results_screen"
+                        on_release:
+                            root.get_results()
 
         AnchorLayout:
             BoxLayout:
