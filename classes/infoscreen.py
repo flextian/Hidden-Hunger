@@ -5,13 +5,11 @@ from kivymd.app import MDApp
 import webbrowser
 
 from kivymd.uix.button import MDFlatButton
+from kivymd.uix.datatables import MDDataTable
 from kivymd.uix.dialog import MDDialog
 from kivymd.uix.snackbar import Snackbar
 
 from classes.components.marker import Marker
-
-
-# TODO: Fix the flickering in the map
 
 
 class InfoScreen(Screen):
@@ -24,7 +22,7 @@ class InfoScreen(Screen):
         2 = address
         3 = phone number
         4 = website
-        5 to 11 = Monday - Friday
+        5 to 11 = Monday - Sunday
         12 = latitude
         13 = longitude
         14 = information
@@ -47,10 +45,12 @@ class InfoScreen(Screen):
                 MDFlatButton(
                     text="Copy",
                     text_color=MDApp.get_running_app().theme_cls.primary_color,
-                    on_release=self.copy_phone_number,
+                    on_release=self.copy_phone_number
                 ),
             ],
         )
+
+        self.schedule_data = None
 
     def on_enter(self, *args):
         self.info = MDApp.get_running_app().row
@@ -58,13 +58,36 @@ class InfoScreen(Screen):
         self.ids.center_panel.ids.list_box.ids.address.text = self.info[2]
         self.ids.center_panel.ids.information.text = self.info[14]
         self.ids.center_panel.ids.title_box.ids.distance.text = (
-            str(self.info[15]) + " Miles Away"
+                str(self.info[15]) + " Miles Away"
         )
 
+        # Modify the phone dialog
         self.phone_dialog.text = self.info[3]
         self.phone_dialog.size_hint_x = 0.8
         self.phone_dialog.size[1] += 100
 
+        # Modify the schedule data table
+        # TODO: Make the data table take up the width of the screen
+        self.schedule_data = MDDataTable(
+            size_hint=(0.8, 0.8),
+            column_data=[
+                ("Day", dp(20)),
+                ("Hours", dp(20))
+            ],
+            row_data=[
+                ('Monday', self.info[5]),
+                ('Tuesday', self.info[6]),
+                ('Wednesday', self.info[7]),
+                ('Thursday', self.info[8]),
+                ('Friday', self.info[9]),
+                ('Saturday', self.info[10]),
+                ('Sunday', self.info[11])
+            ]
+        )
+        self.schedule_data.table_data.rows_num = 7
+        self.schedule_data.table_data.set_row_data()
+
+        # Add the food bank to the map
         self.map = self.ids.map
         self.marker = Marker(float(self.info[12]), float(self.info[13]), self.map)
         self.map.add_widget(self.marker)
@@ -110,12 +133,18 @@ class InfoScreen(Screen):
     def call_number(self):
         self.phone_dialog.open()
 
+    def open_schedule_data(self):
+        self.schedule_data.open()
+
     def copy_phone_number(self, _):
         Clipboard.copy(self.info[3])
         Snackbar(text="Copied to Clipboard!").show()
 
     def close_phone_number_dialog(self, _):
         self.phone_dialog.dismiss()
+
+    def close_schedule_data(self, _):
+        self.schedule_data.dismiss()
 
     def go_back(self):
         self.map.remove_widget(self.marker)
