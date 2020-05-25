@@ -13,12 +13,19 @@ class FoodbankIcon(MDCard):
         self.manager = manager
 
         box_container = BoxLayout()
-        title = MDLabel(text=info[1], font_style='H6', halign='center', font_size=10)
-        distance = MDLabel(text=str(info[15]) + " Miles", font_style='H6', halign='center', font_size=10)
+        title = MDLabel(text=info[1], font_style="H6", halign="center", font_size=10)
+        distance = MDLabel(
+            text=str(info[15]) + " Miles",
+            font_style="H6",
+            halign="center",
+            font_size=10,
+        )
         box_container.add_widget(title)
         box_container.add_widget(distance)
 
-        background_button = Button(background_color=[0, 0, 0, 0], on_release=self.enter_info_screen)
+        background_button = Button(
+            background_color=[0, 0, 0, 0], on_release=self.enter_info_screen
+        )
 
         anchor = AnchorLayout()
         anchor.add_widget(background_button)
@@ -28,4 +35,4 @@ class FoodbankIcon(MDCard):
 
     def enter_info_screen(self, _):
         MDApp.get_running_app().row = self.info
-        self.manager.current = 'info_screen'
+        self.manager.current = "info_screen"

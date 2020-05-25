@@ -7,4 +7,4 @@ class ResultsScreen(Screen):
         self.zip_code = None
 
     def go_back(self):
-        self.manager.current = 'main_screen'
+        self.manager.current = "main_screen"
