@@ -1,4 +1,5 @@
 import datetime
+import math
 import webbrowser
 import calendar
 
@@ -37,6 +38,7 @@ class InfoScreen(Screen):
         self.phone_number = None
         self.map = None
         self.marker = None
+        self.midpoint = None
 
         self.phone_dialog = MDDialog(
             title="Phone Number",
@@ -71,7 +73,7 @@ class InfoScreen(Screen):
 
         self.ids.center_panel.ids.information.text = self.info[14]
         self.ids.center_panel.ids.title_box.ids.distance.text = (
-            str(self.info[15]) + " Miles Away"
+                str(self.info[15]) + " Miles Away"
         )
 
         # Modify the phone dialog
@@ -101,6 +103,10 @@ class InfoScreen(Screen):
         self.map = self.ids.map
         self.marker = Marker(float(self.info[12]), float(self.info[13]), self.map)
         self.map.add_widget(self.marker)
+
+        # Calculate the midpoint of the foodbank and the person
+        print(self.info[12], self.info[13], self.info[16], self.info[17])
+        self.midpoint = midpoint(self.info[12], self.info[13], self.info[16], self.info[17])
 
         # Disables the website button if there is no website
         self.url = self.info[4]
@@ -146,6 +152,10 @@ class InfoScreen(Screen):
     def open_schedule_data(self):
         self.schedule_data.open()
 
+    def center_on_midpoint(self):
+        print(self.map.get_bbox())
+        self.map.center_on(self.midpoint[0], self.midpoint[1])
+
     def copy_phone_number(self, _):
         Clipboard.copy(self.info[3])
         Snackbar(text="Copied to Clipboard!").show()
@@ -159,3 +169,22 @@ class InfoScreen(Screen):
     def go_back(self):
         self.map.remove_widget(self.marker)
         self.manager.current = "results_screen"
+
+
+def midpoint(x1, y1, x2, y2):
+    # Input values as degrees
+
+    # Convert to radians
+    lat1 = math.radians(x1)
+    lon1 = math.radians(y1)
+    lat2 = math.radians(x2)
+    lon2 = math.radians(y2)
+
+    bx = math.cos(lat2) * math.cos(lon2 - lon1)
+    by = math.cos(lat2) * math.sin(lon2 - lon1)
+    lat3 = math.atan2(math.sin(lat1) + math.sin(lat2),
+                      math.sqrt((math.cos(lat1) + bx) * (math.cos(lat1)
+                                                         + bx) + by ** 2))
+    lon3 = lon1 + math.atan2(by, math.cos(lat1) + bx)
+
+    return math.degrees(lat3), math.degrees(lon3)
