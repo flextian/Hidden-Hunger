@@ -173,6 +173,7 @@
             icon: "map-marker"
 
         OneLineItem:
+            id: hours
             text: "Open today: [color={}]7:00 AM - 6:00 PM[/color]".format(get_hex_from_color(self.theme_cls.primary_color))
             icon: "history"
             on_release: app.root.get_screen('info_screen').open_schedule_data()

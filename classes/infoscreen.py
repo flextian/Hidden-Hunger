@@ -1,9 +1,12 @@
+import datetime
+import webbrowser
+import calendar
+
 from kivy.core.clipboard import Clipboard
 from kivy.metrics import dp
 from kivy.uix.screenmanager import Screen
+from kivy.utils import get_hex_from_color
 from kivymd.app import MDApp
-import webbrowser
-
 from kivymd.uix.button import MDFlatButton
 from kivymd.uix.datatables import MDDataTable
 from kivymd.uix.dialog import MDDialog
@@ -45,7 +48,7 @@ class InfoScreen(Screen):
                 MDFlatButton(
                     text="Copy",
                     text_color=MDApp.get_running_app().theme_cls.primary_color,
-                    on_release=self.copy_phone_number
+                    on_release=self.copy_phone_number,
                 ),
             ],
         )
@@ -56,9 +59,17 @@ class InfoScreen(Screen):
         self.info = MDApp.get_running_app().row
         self.ids.center_panel.ids.title_box.ids.title.text = self.info[1]
         self.ids.center_panel.ids.list_box.ids.address.text = self.info[2]
+
+        day = datetime.datetime.today().weekday()
+        for index in range(5, 12):
+            if self.info[index] is None:
+                self.info[index] = "Closed"
+        self.ids.center_panel.ids.list_box.ids.hours.text = f"""{calendar.day_name[day]}: [color={get_hex_from_color(
+            MDApp.get_running_app().theme_cls.primary_color)}]{self.info[day + 5]}[/color]"""
+
         self.ids.center_panel.ids.information.text = self.info[14]
         self.ids.center_panel.ids.title_box.ids.distance.text = (
-                str(self.info[15]) + " Miles Away"
+            str(self.info[15]) + " Miles Away"
         )
 
         # Modify the phone dialog
@@ -69,20 +80,17 @@ class InfoScreen(Screen):
         # Modify the schedule data table
         # TODO: Make the data table take up the width of the screen
         self.schedule_data = MDDataTable(
-            size_hint=(0.8, 0.8),
-            column_data=[
-                ("Day", dp(20)),
-                ("Hours", dp(20))
-            ],
+            size_hint=(0.9, 0.8),
+            column_data=[("Day", dp(20)), ("Hours", dp(30))],
             row_data=[
-                ('Monday', self.info[5]),
-                ('Tuesday', self.info[6]),
-                ('Wednesday', self.info[7]),
-                ('Thursday', self.info[8]),
-                ('Friday', self.info[9]),
-                ('Saturday', self.info[10]),
-                ('Sunday', self.info[11])
-            ]
+                ("Monday", self.info[5]),
+                ("Tuesday", self.info[6]),
+                ("Wednesday", self.info[7]),
+                ("Thursday", self.info[8]),
+                ("Friday", self.info[9]),
+                ("Saturday", self.info[10]),
+                ("Sunday", self.info[11]),
+            ],
         )
         self.schedule_data.table_data.rows_num = 7
         self.schedule_data.table_data.set_row_data()
