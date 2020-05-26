@@ -7,4 +7,5 @@ class ResultsScreen(Screen):
         self.zip_code = None
 
     def go_back(self):
+        self.ids.bank_icons.clear_widgets()
         self.manager.current = "main_screen"

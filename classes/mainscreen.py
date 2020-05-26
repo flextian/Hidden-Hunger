@@ -6,6 +6,7 @@ import pgeocode
 from kivy.clock import Clock
 from kivy.uix.screenmanager import Screen
 from kivy_garden.mapview import MapMarkerPopup
+from kivymd.uix.label import MDLabel
 from kivymd.uix.menu import MDDropdownMenu
 
 from classes.components.foodbankicon import FoodbankIcon
@@ -58,52 +59,57 @@ class MainScreen(Screen):
     def search(self, *args):
         cards = []
 
-        self.manager.get_screen("results_screen").ids.bank_icons.clear_widgets()
+        # Get zip code data and check if valid
+        zip_to_coords = pgeocode.Nominatim("us")
+        zip_code_latitude = float(zip_to_coords.query_postal_code(self.zip_code).get("latitude"))
+        print(type(zip_code_latitude))
+        # if the zip code doesnt have valid data
+        if math.isnan(zip_code_latitude):
+            error_label = MDLabel(text='Invalid zip code!', halign='center')
+            self.manager.get_screen("results_screen").ids.bank_icons.add_widget(error_label)
+            return
+        zip_code_longitude = float(
+            zip_to_coords.query_postal_code(self.zip_code).get("longitude")
+        )
+        self.zip_code_latitude = zip_code_latitude
+        self.zip_code_longitude = zip_code_longitude
+
+        # Connect to database
         connection = mysql.connector.connect(
             host="foodbanks.cnwqm1nc27hx.us-east-2.rds.amazonaws.com",
             database="foodbanks",
             user="app_user",
             passwd="password",
         )
-
         query = "select * from foodbanks"
         cursor = connection.cursor()
         cursor.execute(query)
         records = cursor.fetchall()
+
+        # Create and append cards
         for row in records:
             row = list(row)
-            foodbank_distance, zip_code_latitude, zip_code_longitude = self.calculate_distance(row)
-
+            foodbank_distance = self.calculate_distance(row, zip_code_latitude, zip_code_longitude)
             # if the distance is greater than the threshold
             if self.distance_threshold is not "All":
                 if foodbank_distance > float(self.distance_threshold):
                     continue
-
             row.append(foodbank_distance)
-            self.zip_code_latitude = zip_code_latitude
-            self.zip_code_longitude = zip_code_longitude
             row.append(zip_code_latitude)
             row.append(zip_code_longitude)
             card = FoodbankIcon(row, self.manager)
             cards.append(card)
-
         cards = sorted(cards, key=lambda x: float(x.info[15]))
-
         for card in cards:
             self.manager.get_screen("results_screen").ids.bank_icons.add_widget(card)
 
         self.create_zip_code_marker()
 
-    def calculate_distance(self, row):
-        zip_to_coords = pgeocode.Nominatim("us")
-        latitude = float(zip_to_coords.query_postal_code(self.zip_code).get("latitude"))
-        longitude = float(
-            zip_to_coords.query_postal_code(self.zip_code).get("longitude")
-        )
+    def calculate_distance(self, row, latitude, longitude):
         distance = self.haversine(
             (latitude, longitude), (float(row[12]), float(row[13]))
         )
-        return round((distance / 1000) * 0.621371, 2), latitude, longitude
+        return round((distance / 1000) * 0.621371, 2)
 
     def haversine(self, coord1, coord2):
         R = 6372800  # Earth radius in meters
