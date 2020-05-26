@@ -39,6 +39,7 @@ class InfoScreen(Screen):
         self.map = None
         self.marker = None
         self.midpoint = None
+        self.ideal_zoom = None
 
         self.phone_dialog = MDDialog(
             title="Phone Number",
@@ -99,14 +100,22 @@ class InfoScreen(Screen):
         self.schedule_data.table_data.rows_num = 7
         self.schedule_data.table_data.set_row_data()
 
-        # Add the food bank to the map
         self.map = self.ids.map
-        self.marker = Marker(float(self.info[12]), float(self.info[13]), self.map)
-        self.map.add_widget(self.marker)
 
-        # Calculate the midpoint of the foodbank and the person
-        print(self.info[12], self.info[13], self.info[16], self.info[17])
+        # calculates and sets the view to the midpoint of the foodbank and the person, calculates an ideal zoom value
         self.midpoint = midpoint(self.info[12], self.info[13], self.info[16], self.info[17])
+        self.map.center_on(self.midpoint[0], self.midpoint[1])
+        self.map.zoom = 17
+        box = self.map.get_bbox()
+        while not(box[0] < (self.info[12] and self.info[16]) < box[2] and box[1] < (self.info[13] and self.info[17]) < box[3]):
+            self.map.zoom -= 1
+            box = self.map.get_bbox()
+        self.ideal_zoom = self.map.zoom - 1
+        self.map.zoom = self.ideal_zoom
+
+        # Adds the foodbank to the map
+        self.marker = Marker(float(self.info[12]), float(self.info[13]), self.map, self.ideal_zoom)
+        self.map.add_widget(self.marker)
 
         # Disables the website button if there is no website
         self.url = self.info[4]
@@ -153,8 +162,8 @@ class InfoScreen(Screen):
         self.schedule_data.open()
 
     def center_on_midpoint(self):
-        print(self.map.get_bbox())
         self.map.center_on(self.midpoint[0], self.midpoint[1])
+        self.map.zoom = self.ideal_zoom
 
     def copy_phone_number(self, _):
         Clipboard.copy(self.info[3])

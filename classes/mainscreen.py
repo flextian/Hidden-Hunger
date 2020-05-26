@@ -19,6 +19,7 @@ class MainScreen(Screen):
         self.zip_code_latitude = None
         self.zip_code_longitude = None
         self.distance_threshold = None
+        self.zip_marker = None
         Clock.schedule_once(lambda _: self.create_dropdown_menu())
 
     def create_dropdown_menu(self):
@@ -128,5 +129,8 @@ class MainScreen(Screen):
 
     def create_zip_code_marker(self):
         map = self.manager.get_screen('info_screen').ids.map
+        if self.zip_marker is not None:
+            map.remove_widget(self.zip_marker)
         marker = MapMarkerPopup(lat=self.zip_code_latitude, lon=self.zip_code_longitude, source=join(dirname(__file__), "..", "sources", "person.png"))
         map.add_widget(marker)
+        self.zip_marker = marker
