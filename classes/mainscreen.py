@@ -39,7 +39,6 @@ class MainScreen(Screen):
             position="auto",
         )
         self.ids.distance.set_item("All")
-        print("dropdown created!")
 
     # TODO: Fix the fact that if you spam the button you crash the program.
     def set_item(self, instance):
@@ -47,7 +46,6 @@ class MainScreen(Screen):
         Clock.schedule_once(lambda _: self.dropdown_menu.dismiss(), 0.3)
 
     def open_dropdown(self):
-        print("pressed!")
         self.dropdown_menu.open()
 
     # All methods below are ran when the submit button is clicked <---------------------------------------------------->
@@ -55,11 +53,7 @@ class MainScreen(Screen):
         self.manager.current = "results_screen"
         self.zip_code = self.ids.zip_code.text
         self.distance_threshold = self.ids.distance.current_item
-        print(self.zip_code)
-        print(self.distance_threshold)
-        # TODO: Make the search process asynchronous (enter the results screen first, then load)
-        self.search()
-        self.create_zip_code_marker()
+        Clock.schedule_once(lambda _: self.search())
 
     def search(self, *args):
         cards = []
@@ -81,10 +75,8 @@ class MainScreen(Screen):
             foodbank_distance, zip_code_latitude, zip_code_longitude = self.calculate_distance(row)
 
             # if the distance is greater than the threshold
-            print(self.distance_threshold)
             if self.distance_threshold is not "All":
                 if foodbank_distance > float(self.distance_threshold):
-                    print("a foodbank just got canceled")
                     continue
 
             row.append(foodbank_distance)
@@ -99,6 +91,8 @@ class MainScreen(Screen):
 
         for card in cards:
             self.manager.get_screen("results_screen").ids.bank_icons.add_widget(card)
+
+        self.create_zip_code_marker()
 
     def calculate_distance(self, row):
         zip_to_coords = pgeocode.Nominatim("us")
