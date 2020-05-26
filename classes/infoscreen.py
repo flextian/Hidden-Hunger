@@ -30,6 +30,8 @@ class InfoScreen(Screen):
         13 = longitude
         14 = information
         15 = distance in miles
+        16 = zip code latitude
+        17 = zip code longitude
         """
         self.url = None
         self.phone_number = None

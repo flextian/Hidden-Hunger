@@ -174,7 +174,7 @@
 
         OneLineItem:
             id: hours
-            text: "Open today: [color={}]7:00 AM - 6:00 PM[/color]".format(get_hex_from_color(self.theme_cls.primary_color))
+            text: ""
             icon: "history"
             on_release: app.root.get_screen('info_screen').open_schedule_data()
 
@@ -237,6 +237,6 @@
     MDFloatingActionButton:
         id: button_car
         md_bg_color: 1, 1, 1, 1
-        icon: "car"
+        icon: "human-male"
         y: (center_panel.height - self.height / 2)
         x: root.width - self.width - dp(32)

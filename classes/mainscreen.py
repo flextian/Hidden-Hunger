@@ -1,8 +1,11 @@
 import math
+from os.path import join, dirname
+
 import mysql.connector
 import pgeocode
 from kivy.clock import Clock
 from kivy.uix.screenmanager import Screen
+from kivy_garden.mapview import MapMarkerPopup
 from kivymd.uix.menu import MDDropdownMenu
 
 from classes.components.foodbankicon import FoodbankIcon
@@ -13,6 +16,8 @@ class MainScreen(Screen):
         super().__init__(**kwargs)
         self.dropdown_menu = None
         self.zip_code = None
+        self.zip_code_latitude = None
+        self.zip_code_longitude = None
         self.distance_threshold = None
         Clock.schedule_once(lambda _: self.create_dropdown_menu())
 
@@ -53,6 +58,7 @@ class MainScreen(Screen):
         print(self.distance_threshold)
         # TODO: Make the search process asynchronous (enter the results screen first, then load)
         self.search()
+        self.create_zip_code_marker()
 
     def search(self, *args):
         cards = []
@@ -71,7 +77,7 @@ class MainScreen(Screen):
         records = cursor.fetchall()
         for row in records:
             row = list(row)
-            foodbank_distance = self.calculate_distance(row)
+            foodbank_distance, zip_code_latitude, zip_code_longitude = self.calculate_distance(row)
 
             # if the distance is greater than the threshold
             print(self.distance_threshold)
@@ -81,6 +87,10 @@ class MainScreen(Screen):
                     continue
 
             row.append(foodbank_distance)
+            self.zip_code_latitude = zip_code_latitude
+            self.zip_code_longitude = zip_code_longitude
+            row.append(zip_code_latitude)
+            row.append(zip_code_longitude)
             card = FoodbankIcon(row, self.manager)
             cards.append(card)
 
@@ -98,7 +108,7 @@ class MainScreen(Screen):
         distance = self.haversine(
             (latitude, longitude), (float(row[12]), float(row[13]))
         )
-        return round((distance / 1000) * 0.621371, 2)
+        return round((distance / 1000) * 0.621371, 2), latitude, longitude
 
     def haversine(self, coord1, coord2):
         R = 6372800  # Earth radius in meters
@@ -110,8 +120,13 @@ class MainScreen(Screen):
         dlambda = math.radians(lon2 - lon1)
 
         a = (
-            math.sin(dphi / 2) ** 2
-            + math.cos(phi1) * math.cos(phi2) * math.sin(dlambda / 2) ** 2
+                math.sin(dphi / 2) ** 2
+                + math.cos(phi1) * math.cos(phi2) * math.sin(dlambda / 2) ** 2
         )
 
         return 2 * R * math.atan2(math.sqrt(a), math.sqrt(1 - a))
+
+    def create_zip_code_marker(self):
+        map = self.manager.get_screen('info_screen').ids.map
+        marker = MapMarkerPopup(lat=self.zip_code_latitude, lon=self.zip_code_longitude, source=join(dirname(__file__), "..", "sources", "person.png"))
+        map.add_widget(marker)
