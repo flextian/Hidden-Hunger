@@ -8,6 +8,7 @@ from kivy.uix.screenmanager import Screen
 from kivy_garden.mapview import MapMarkerPopup
 from kivymd.uix.label import MDLabel
 from kivymd.uix.menu import MDDropdownMenu
+from mysql.connector import errorcode
 
 from classes.components.foodbankicon import FoodbankIcon
 
@@ -58,15 +59,15 @@ class MainScreen(Screen):
 
     def search(self, *args):
         cards = []
+        icon_scroller = self.manager.get_screen("results_screen").ids.bank_icons
 
         # Get zip code data and check if valid
         zip_to_coords = pgeocode.Nominatim("us")
         zip_code_latitude = float(zip_to_coords.query_postal_code(self.zip_code).get("latitude"))
-        print(type(zip_code_latitude))
-        # if the zip code doesnt have valid data
+        # if the zip code doesnt have valid data / is invalid
         if math.isnan(zip_code_latitude):
-            error_label = MDLabel(text='Invalid zip code!', halign='center')
-            self.manager.get_screen("results_screen").ids.bank_icons.add_widget(error_label)
+            error_label = MDLabel(text='Invalid Zip Code!', halign='center')
+            icon_scroller.add_widget(error_label)
             return
         zip_code_longitude = float(
             zip_to_coords.query_postal_code(self.zip_code).get("longitude")
@@ -75,16 +76,24 @@ class MainScreen(Screen):
         self.zip_code_longitude = zip_code_longitude
 
         # Connect to database
-        connection = mysql.connector.connect(
-            host="foodbanks.cnwqm1nc27hx.us-east-2.rds.amazonaws.com",
-            database="foodbanks",
-            user="app_user",
-            passwd="password",
-        )
-        query = "select * from foodbanks"
-        cursor = connection.cursor()
-        cursor.execute(query)
-        records = cursor.fetchall()
+        try:
+            connection = mysql.connector.connect(
+                host="foodbanks.cnwqm1nc27hx.us-east-2.rds.amazonaws.com",
+                database="foodbanks",
+                user="app_user",
+                passwd="password",
+            )
+            query = "select * from foodbanks"
+            cursor = connection.cursor()
+            cursor.execute(query)
+            records = cursor.fetchall()
+        except mysql.connector.Error as err:
+            if err.errno == errorcode.CR_CONN_HOST_ERROR:
+                connection_error_label = MDLabel(text='No Internet Connection!', halign='center')
+                icon_scroller.add_widget(connection_error_label)
+                return
+            else:
+                raise
 
         # Create and append cards
         for row in records:
@@ -101,7 +110,11 @@ class MainScreen(Screen):
             cards.append(card)
         cards = sorted(cards, key=lambda x: float(x.info[15]))
         for card in cards:
-            self.manager.get_screen("results_screen").ids.bank_icons.add_widget(card)
+            icon_scroller.add_widget(card)
+
+        if len(cards) == 0:
+            no_results_label = MDLabel(text='No Results Found!', halign='center')
+            icon_scroller.add_widget(no_results_label)
 
         self.create_zip_code_marker()
 
@@ -131,6 +144,7 @@ class MainScreen(Screen):
         map = self.manager.get_screen('info_screen').ids.map
         if self.zip_marker is not None:
             map.remove_widget(self.zip_marker)
-        marker = MapMarkerPopup(lat=self.zip_code_latitude, lon=self.zip_code_longitude, source=join(dirname(__file__), "..", "sources", "person.png"))
+        marker = MapMarkerPopup(lat=self.zip_code_latitude, lon=self.zip_code_longitude,
+                                source=join(dirname(__file__), "..", "sources", "person.png"))
         map.add_widget(marker)
         self.zip_marker = marker
