@@ -1,0 +1,19 @@
+Super simple `Google Spreadsheets Python API`_.
+
+.. _Google Spreadsheets Python API: https://github.com/burnash/gspread
+
+Features
+--------
+
+* Google Sheets API v4.
+* Open a spreadsheet by title, key or url.
+* Read, write, and format cell ranges.
+* Sharing and access control.
+* Batching updates.
+
+
+License
+-------
+MIT
+
+
