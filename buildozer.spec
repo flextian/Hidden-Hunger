@@ -1,10 +1,10 @@
 [app]
 
 # (str) Title of your application
-title = Hidden Hunger
+title = Hidden_Hunger
 
 # (str) Package name
-package.name = Hidden Hunger
+package.name = Hidden_hunger
 
 # (str) Package domain (needed for android/ios packaging)
 package.domain = org.test
