@@ -1,7 +1,6 @@
 import datetime
 import math
 import webbrowser
-import calendar
 
 from kivy.core.clipboard import Clipboard
 from kivy.metrics import dp
@@ -66,10 +65,11 @@ class InfoScreen(Screen):
         self.ids.center_panel.ids.list_box.ids.address.text = self.info[2]
 
         day = datetime.datetime.today().weekday()
+        day_name = ['Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday', 'Sunday']
         for index in range(5, 12):
             if self.info[index] is None:
                 self.info[index] = "Closed"
-        self.ids.center_panel.ids.list_box.ids.hours.text = f"""{calendar.day_name[day]}: [color={get_hex_from_color(
+        self.ids.center_panel.ids.list_box.ids.hours.text = f"""{day_name[day]}: [color={get_hex_from_color(
             MDApp.get_running_app().theme_cls.primary_color)}]{self.info[day + 5]}[/color]"""
 
         self.ids.center_panel.ids.information.text = self.info[14]

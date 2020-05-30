@@ -36,7 +36,7 @@ version = 0.1
 
 # (list) Application requirements
 # comma separated e.g. requirements = sqlite3,kivy
-requirements = python3,kivy,kivymd,math,os,pgeocode,mysql,datetime,webbrowser,calendar,mapview
+requirements = python3,kivy,kivymd,math,pgeocode,mysql,datetime,webbrowser,mapview
 
 # (str) Custom source folders for requirements
 # Sets custom source for any requirements with r,mysql ecipes
