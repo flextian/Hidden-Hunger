@@ -72,7 +72,9 @@ class InfoScreen(Screen):
         self.ids.center_panel.ids.list_box.ids.hours.text = f"""{day_name[day]}: [color={get_hex_from_color(
             MDApp.get_running_app().theme_cls.primary_color)}]{self.info[day + 5]}[/color]"""
 
-        self.ids.center_panel.ids.information.text = self.info[14]
+        if self.info[14] is not None:
+            self.ids.center_panel.ids.information.text = self.info[14]
+
         self.ids.center_panel.ids.title_box.ids.distance.text = (
                 str(self.info[15]) + " Miles Away"
         )

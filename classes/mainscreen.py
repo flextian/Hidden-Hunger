@@ -26,7 +26,6 @@ class MainScreen(Screen):
 
     def create_dropdown_menu(self):
         menu_items = [
-            {"text": "All"},
             {"text": "50"},
             {"text": "30"},
             {"text": "15"},
@@ -40,7 +39,7 @@ class MainScreen(Screen):
             callback=self.set_item,
             position="auto",
         )
-        self.ids.distance.set_item("All")
+        self.ids.distance.set_item("15")
 
     # TODO: Fix the fact that if you spam the button you crash the program.
     def set_item(self, instance):
@@ -100,9 +99,9 @@ class MainScreen(Screen):
             row = list(row)
             foodbank_distance = self.calculate_distance(row, zip_code_latitude, zip_code_longitude)
             # if the distance is greater than the threshold
-            if self.distance_threshold is not "All":
-                if foodbank_distance > float(self.distance_threshold):
-                    continue
+
+            if foodbank_distance > float(self.distance_threshold):
+                continue
             row.append(foodbank_distance)
             row.append(zip_code_latitude)
             row.append(zip_code_longitude)
