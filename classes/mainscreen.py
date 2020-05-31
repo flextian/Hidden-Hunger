@@ -36,12 +36,12 @@ class MainScreen(Screen):
             caller=self.ids.distance,
             items=menu_items,
             width_mult=4,
+            opening_time=0,
             callback=self.set_item,
             position="auto",
         )
         self.ids.distance.set_item("15")
 
-    # TODO: Fix the fact that if you spam the button you crash the program.
     def set_item(self, instance):
         self.ids.distance.set_item(instance.text)
         Clock.schedule_once(lambda _: self.dropdown_menu.dismiss(), 0.3)

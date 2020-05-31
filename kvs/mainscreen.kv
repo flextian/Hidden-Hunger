@@ -52,4 +52,4 @@
                 MDDropDownItem:
                     id: distance
                     pos_hint: {'center_x': .5, 'center_y': .5}
-                    on_release: root.open_dropdown()
+                    on_release: app.root.get_screen('main_screen').open_dropdown()
