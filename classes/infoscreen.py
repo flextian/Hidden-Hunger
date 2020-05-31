@@ -65,7 +65,15 @@ class InfoScreen(Screen):
         self.ids.center_panel.ids.list_box.ids.address.text = self.info[2]
 
         day = datetime.datetime.today().weekday()
-        day_name = ['Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday', 'Sunday']
+        day_name = [
+            "Monday",
+            "Tuesday",
+            "Wednesday",
+            "Thursday",
+            "Friday",
+            "Saturday",
+            "Sunday",
+        ]
         for index in range(5, 12):
             if self.info[index] is None:
                 self.info[index] = "Closed"
@@ -76,13 +84,8 @@ class InfoScreen(Screen):
             self.ids.center_panel.ids.information.text = self.info[14]
 
         self.ids.center_panel.ids.title_box.ids.distance.text = (
-                str(self.info[15]) + " Miles Away"
+            str(self.info[15]) + " Miles Away"
         )
-
-        # Modify the phone dialog
-        self.phone_dialog.text = self.info[3]
-        self.phone_dialog.size_hint_x = 0.8
-        self.phone_dialog.size[1] += 100
 
         # Modify the schedule data table
         # TODO: Make the data table take up the width of the screen
@@ -105,18 +108,25 @@ class InfoScreen(Screen):
         self.map = self.ids.map
 
         # calculates and sets the view to the midpoint of the foodbank and the person, calculates an ideal zoom value
-        self.midpoint = midpoint(self.info[12], self.info[13], self.info[16], self.info[17])
+        self.midpoint = midpoint(
+            self.info[12], self.info[13], self.info[16], self.info[17]
+        )
         self.map.center_on(self.midpoint[0], self.midpoint[1])
         self.map.zoom = 17
         box = self.map.get_bbox()
-        while not(box[0] < (self.info[12] and self.info[16]) < box[2] and box[1] < (self.info[13] and self.info[17]) < box[3]):
+        while not (
+            box[0] < (self.info[12] and self.info[16]) < box[2]
+            and box[1] < (self.info[13] and self.info[17]) < box[3]
+        ):
             self.map.zoom -= 1
             box = self.map.get_bbox()
         self.ideal_zoom = self.map.zoom - 1
         self.map.zoom = self.ideal_zoom
 
         # Adds the foodbank to the map
-        self.marker = Marker(float(self.info[12]), float(self.info[13]), self.map, self.ideal_zoom)
+        self.marker = Marker(
+            float(self.info[12]), float(self.info[13]), self.map, self.ideal_zoom
+        )
         self.map.add_widget(self.marker)
 
         # Disables the website button if there is no website
@@ -146,6 +156,10 @@ class InfoScreen(Screen):
                 MDApp.get_running_app().theme_cls.disabled_hint_text_color
             )
         else:
+            # Modify the phone dialog
+            self.phone_dialog.text = self.info[3]
+            self.phone_dialog.size_hint_x = 0.8
+            self.phone_dialog.size[1] += 100
             self.ids.center_panel.ids.buttons_box.ids.call_container.ids.call_button.disabled = (
                 False
             )
@@ -193,9 +207,10 @@ def midpoint(x1, y1, x2, y2):
 
     bx = math.cos(lat2) * math.cos(lon2 - lon1)
     by = math.cos(lat2) * math.sin(lon2 - lon1)
-    lat3 = math.atan2(math.sin(lat1) + math.sin(lat2),
-                      math.sqrt((math.cos(lat1) + bx) * (math.cos(lat1)
-                                                         + bx) + by ** 2))
+    lat3 = math.atan2(
+        math.sin(lat1) + math.sin(lat2),
+        math.sqrt((math.cos(lat1) + bx) * (math.cos(lat1) + bx) + by ** 2),
+    )
     lon3 = lon1 + math.atan2(by, math.cos(lat1) + bx)
 
     return math.degrees(lat3), math.degrees(lon3)

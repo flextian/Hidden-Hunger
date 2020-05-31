@@ -62,10 +62,12 @@ class MainScreen(Screen):
 
         # Get zip code data and check if valid
         zip_to_coords = pgeocode.Nominatim("us")
-        zip_code_latitude = float(zip_to_coords.query_postal_code(self.zip_code).get("latitude"))
+        zip_code_latitude = float(
+            zip_to_coords.query_postal_code(self.zip_code).get("latitude")
+        )
         # if the zip code doesnt have valid data / is invalid
         if math.isnan(zip_code_latitude):
-            error_label = MDLabel(text='Invalid Zip Code!', halign='center')
+            error_label = MDLabel(text="Invalid Zip Code!", halign="center")
             icon_scroller.add_widget(error_label)
             return
         zip_code_longitude = float(
@@ -88,7 +90,9 @@ class MainScreen(Screen):
             records = cursor.fetchall()
         except mysql.connector.Error as err:
             if err.errno == errorcode.CR_CONN_HOST_ERROR:
-                connection_error_label = MDLabel(text='No Internet Connection!', halign='center')
+                connection_error_label = MDLabel(
+                    text="No Internet Connection!", halign="center"
+                )
                 icon_scroller.add_widget(connection_error_label)
                 return
             else:
@@ -97,7 +101,9 @@ class MainScreen(Screen):
         # Create and append cards
         for row in records:
             row = list(row)
-            foodbank_distance = self.calculate_distance(row, zip_code_latitude, zip_code_longitude)
+            foodbank_distance = self.calculate_distance(
+                row, zip_code_latitude, zip_code_longitude
+            )
             # if the distance is greater than the threshold
 
             if foodbank_distance > float(self.distance_threshold):
@@ -112,7 +118,7 @@ class MainScreen(Screen):
             icon_scroller.add_widget(card)
 
         if len(cards) == 0:
-            no_results_label = MDLabel(text='No Results Found!', halign='center')
+            no_results_label = MDLabel(text="No Results Found!", halign="center")
             icon_scroller.add_widget(no_results_label)
 
         self.create_zip_code_marker()
@@ -133,17 +139,20 @@ class MainScreen(Screen):
         dlambda = math.radians(lon2 - lon1)
 
         a = (
-                math.sin(dphi / 2) ** 2
-                + math.cos(phi1) * math.cos(phi2) * math.sin(dlambda / 2) ** 2
+            math.sin(dphi / 2) ** 2
+            + math.cos(phi1) * math.cos(phi2) * math.sin(dlambda / 2) ** 2
         )
 
         return 2 * R * math.atan2(math.sqrt(a), math.sqrt(1 - a))
 
     def create_zip_code_marker(self):
-        map = self.manager.get_screen('info_screen').ids.map
+        map = self.manager.get_screen("info_screen").ids.map
         if self.zip_marker is not None:
             map.remove_widget(self.zip_marker)
-        marker = MapMarkerPopup(lat=self.zip_code_latitude, lon=self.zip_code_longitude,
-                                source=join(dirname(__file__), "..", "sources", "person.png"))
+        marker = MapMarkerPopup(
+            lat=self.zip_code_latitude,
+            lon=self.zip_code_longitude,
+            source=join(dirname(__file__), "..", "sources", "person.png"),
+        )
         map.add_widget(marker)
         self.zip_marker = marker
