@@ -1,4 +1,4 @@
-#!G:\users\Alex\Programming\Programming Projects\hunger_app\venv\Scripts\python.exe
+#!g:\users\alex\programming\programming projects\hunger_app\venv\scripts\python.exe
 
 # $Id: rst2s5.py 4564 2006-05-21 20:44:42Z wiemann $
 # Author: Chris Liechti <cliechti@gmx.net>

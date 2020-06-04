@@ -1,4 +1,4 @@
-#!G:\users\Alex\Programming\Programming Projects\hunger_app\venv\Scripts\python.exe
+#!g:\users\alex\programming\programming projects\hunger_app\venv\scripts\python.exe
 # -*- coding: utf8 -*-
 # :Copyright: © 2015 Günter Milde.
 # :License: Released under the terms of the `2-Clause BSD license`_, in short:

@@ -1,3 +1,5 @@
+from os.path import dirname, join
+
 from kivy_garden.mapview import MapMarkerPopup
 
 
@@ -8,6 +10,7 @@ class Marker(MapMarkerPopup):
         self.lat = lat
         self.lon = lon
         self.ideal_zoom = ideal_zoom
+        self.source = join(dirname(__file__), "..", "..", "sources", "location.png")
 
     def on_release(self, *args):
         self.map.center_on(self.lat, self.lon)

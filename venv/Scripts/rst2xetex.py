@@ -1,4 +1,4 @@
-#!G:\users\Alex\Programming\Programming Projects\hunger_app\venv\Scripts\python.exe
+#!g:\users\alex\programming\programming projects\hunger_app\venv\scripts\python.exe
 
 # $Id: rst2xetex.py 7847 2015-03-17 17:30:47Z milde $
 # Author: Guenter Milde
