@@ -1,3 +1,5 @@
+import os
+import certifi
 from kivymd.app import MDApp
 from kivy.factory import Factory
 from kivy.lang import Builder
@@ -9,6 +11,8 @@ Factory.register("ResultsScreen", module="classes.resultsscreen")
 Builder.load_file("kvs/resultsscreen.kv")
 Factory.register("InfoScreen", module="classes.infoscreen")
 Builder.load_file("kvs/infoscreen.kv")
+
+os.environ['SSL_CERT_FILE'] = certifi.where()
 
 
 class UIManager(ScreenManager):
