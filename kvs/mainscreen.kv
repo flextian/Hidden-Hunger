@@ -2,13 +2,9 @@
     name: "main_screen"
     BoxLayout:
         orientation: 'vertical'
-        AnchorLayout:
-            size_hint: 1, 0.7
-            MDLabel:
-                font_size: self.height / 3
-                text: "Hidden Hunger"
-                font_style: 'H1'
-                halign: 'center'
+        BoxLayout:
+            Image:
+                source: 'sources/logo.png'
         AnchorLayout:
             BoxLayout:
                 orientation: 'vertical'

@@ -1,6 +1,5 @@
 import math
 from os.path import join, dirname
-
 import mysql.connector
 import pgeocode
 from kivy.clock import Clock
@@ -9,8 +8,19 @@ from kivy_garden.mapview import MapMarkerPopup
 from kivymd.uix.label import MDLabel
 from kivymd.uix.menu import MDDropdownMenu
 from mysql.connector import errorcode
-
 from classes.components.foodbankicon import FoodbankIcon
+
+try:
+    from android.permissions import request_permissions, Permission
+
+    permissions = [
+        Permission.WRITE_EXTERNAL_STORAGE,
+        Permission.READ_EXTERNAL_STORAGE,
+    ]
+
+    request_permissions(permissions)
+except ImportError:
+    print('not on android')
 
 
 class MainScreen(Screen):
@@ -139,8 +149,8 @@ class MainScreen(Screen):
         dlambda = math.radians(lon2 - lon1)
 
         a = (
-            math.sin(dphi / 2) ** 2
-            + math.cos(phi1) * math.cos(phi2) * math.sin(dlambda / 2) ** 2
+                math.sin(dphi / 2) ** 2
+                + math.cos(phi1) * math.cos(phi2) * math.sin(dlambda / 2) ** 2
         )
 
         return 2 * R * math.atan2(math.sqrt(a), math.sqrt(1 - a))
