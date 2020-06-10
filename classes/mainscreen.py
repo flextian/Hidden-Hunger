@@ -10,19 +10,6 @@ from kivymd.uix.menu import MDDropdownMenu
 from mysql.connector import errorcode
 from classes.components.foodbankicon import FoodbankIcon
 
-try:
-    from android.permissions import request_permissions, Permission
-
-    permissions = [
-        Permission.WRITE_EXTERNAL_STORAGE,
-        Permission.READ_EXTERNAL_STORAGE,
-    ]
-
-    request_permissions(permissions)
-except ImportError:
-    print('not on android')
-
-
 class MainScreen(Screen):
     def __init__(self, **kwargs):
         super().__init__(**kwargs)

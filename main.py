@@ -14,6 +14,19 @@ Builder.load_file("kvs/infoscreen.kv")
 
 os.environ['SSL_CERT_FILE'] = certifi.where()
 
+try:
+    from android.permissions import request_permissions, Permission
+
+    print('success')
+    permissions = [
+        Permission.WRITE_EXTERNAL_STORAGE,
+        Permission.READ_EXTERNAL_STORAGE,
+    ]
+
+    request_permissions(permissions)
+except ImportError:
+    print('not on android')
+
 
 class UIManager(ScreenManager):
     def __init__(self, **kwargs):
