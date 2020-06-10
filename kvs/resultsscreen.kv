@@ -3,14 +3,44 @@
     size_hint_y: None
     focus_behavior: True
 
+<CustomToolbar>:
+    size_hint_y: None
+    height: self.theme_cls.standard_increment
+    padding: "5dp"
+    spacing: "12dp"
+
+    MDIconButton:
+        id: button_1
+        icon: "menu"
+        pos_hint: {"center_y": .5}
+        on_release: app.menu_1.open()
+
+    MDLabel:
+        text: "MDDropdownMenu"
+        pos_hint: {"center_y": .5}
+        size_hint_x: None
+        width: self.texture_size[0]
+        text_size: None, None
+        font_style: 'H6'
+
+    Widget:
+
+    MDIconButton:
+        id: button_2
+        icon: "dots-vertical"
+        pos_hint: {"center_y": .5}
+        on_release: app.menu_2.open()
+
 <ResultsScreen>
     name: "results_screen"
+
     BoxLayout:
         orientation: "vertical"
-        MDToolbar:
-            title: "Results"
-            left_action_items: [['arrow-left', lambda x: root.go_back()]]
-            right_action_items: [['dots-vertical', lambda x: root.go_back()]]
+
+        CustomToolbar:
+            id: toolbar
+            elevation: 10
+            pos_hint: {"top": 1}
 
         ScrollView:
             MDBoxLayout:
