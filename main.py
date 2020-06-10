@@ -3,7 +3,7 @@ import certifi
 from kivymd.app import MDApp
 from kivy.factory import Factory
 from kivy.lang import Builder
-from kivy.uix.screenmanager import FadeTransition, ScreenManager
+from kivy.uix.screenmanager import ScreenManager, FadeTransition
 
 Factory.register("MainScreen", module="classes.mainscreen")
 Builder.load_file("kvs/mainscreen.kv")

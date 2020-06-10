@@ -11,6 +11,7 @@ class FoodbankIcon(MDCard):
         super().__init__(**kwargs)
         self.info = info
         self.manager = manager
+        self.elevation = 10
 
         box_container = BoxLayout()
         title = MDLabel(text=info[1], font_style="H6", halign="center", font_size=10)

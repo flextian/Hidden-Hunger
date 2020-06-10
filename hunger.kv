@@ -3,22 +3,14 @@
 
 <UIManager>:
     loading_popup: Factory.LoadingPopup()
-    canvas:
-        Color:
-            rgba: 255 / 255, 255 / 255 , 255 / 255, 1
-        Rectangle:
-            size: root.size
-            pos: root.pos
+
     MainScreen:
     ResultsScreen:
     InfoScreen:
 
-<LoadingPopup@Popup>:
-    title: ""
+<LoadingPopup@MDDialog>:
+    title: "Loading..."
     size_hint: 0.8, 0.3
-    AnchorLayout:
-        Label:
-            text: "Loading..."
 
 <Screen>:
     on_enter: root.manager.loading_popup.dismiss()
