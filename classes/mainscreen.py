@@ -21,6 +21,19 @@ class MainScreen(Screen):
         self.zip_marker = None
         Clock.schedule_once(lambda _: self.create_dropdown_menu())
 
+        try:
+            from android.permissions import request_permissions, Permission
+
+            print('success')
+            permissions = [
+                Permission.WRITE_EXTERNAL_STORAGE,
+                Permission.READ_EXTERNAL_STORAGE,
+            ]
+
+            request_permissions(permissions)
+        except ImportError:
+            print('not on android')
+
     def create_dropdown_menu(self):
         menu_items = [
             {"text": "50"},
