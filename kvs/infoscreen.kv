@@ -17,7 +17,7 @@
     icon: root.icon
     theme_text_color: "Custom"
     text_color: app.theme_cls.primary_color
-    user_font_size: "20sp"
+    user_font_size: "20dp"
     pos_hint: {"center_y": .5}
 
 #------------------------------------------------------------------------------
@@ -37,24 +37,11 @@
 
 #------------------------------------------------------------------------------
 
-<OneLineItem@OneLineAvatarListItem>
+<OneLineItemHours@OneLineAvatarListItem>
     icon: ""
     font_style: "Caption"
     height: "40dp"
     _txt_bot_pad: "12dp"
-
-    IconLeft:
-        icon: root.icon
-
-
-#------------------------------------------------------------------------------
-
-<TwoLineItem@TwoLineIconListItem>
-    icon: ""
-    font_style: "Caption"
-    secondary_font_style: "Caption"
-    height: "64dp"
-    _txt_bot_pad: "16dp"
 
     IconLeft:
         icon: root.icon
@@ -169,13 +156,13 @@
             text: ""
             icon: "map-marker"
 
-        OneLineItem:
+        OneLineItemHours:
             id: hours
             text: ""
             icon: "history"
             on_release: app.root.get_screen('info_screen').open_schedule_data()
 
-#------------------------------------------------------------------------------
+#--------------------------------------------------------------------------------------------------------------------------------------------------------------
 
 <CenterPanel@MDBoxLayout>
     orientation: "vertical"
