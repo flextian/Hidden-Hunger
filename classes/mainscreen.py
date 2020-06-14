@@ -10,6 +10,7 @@ from kivymd.uix.menu import MDDropdownMenu
 from mysql.connector import errorcode
 from classes.components.foodbankicon import FoodbankIcon
 
+
 class MainScreen(Screen):
     def __init__(self, **kwargs):
         super().__init__(**kwargs)
