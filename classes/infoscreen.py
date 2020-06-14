@@ -2,7 +2,9 @@ import datetime
 import math
 import webbrowser
 
+from kivy.clock import Clock
 from kivy.core.clipboard import Clipboard
+from kivy.core.window import Window
 from kivy.metrics import dp
 from kivy.uix.screenmanager import Screen
 from kivy.utils import get_hex_from_color
@@ -84,7 +86,7 @@ class InfoScreen(Screen):
             self.ids.center_panel.ids.information.text = self.info[14]
 
         self.ids.center_panel.ids.title_box.ids.distance.text = (
-            str(self.info[15]) + " Miles Away"
+                str(self.info[15]) + " Miles Away"
         )
 
         # Modify the schedule data table
@@ -115,8 +117,8 @@ class InfoScreen(Screen):
         self.map.zoom = 17
         box = self.map.get_bbox()
         while not (
-            box[0] < (self.info[12] and self.info[16]) < box[2]
-            and box[1] < (self.info[13] and self.info[17]) < box[3]
+                box[0] < (self.info[12] and self.info[16]) < box[2]
+                and box[1] < (self.info[13] and self.info[17]) < box[3]
         ):
             self.map.zoom -= 1
             box = self.map.get_bbox()
@@ -166,6 +168,13 @@ class InfoScreen(Screen):
             self.ids.center_panel.ids.buttons_box.ids.call_container.ids.call_button_text.text_color = (
                 MDApp.get_running_app().theme_cls.primary_color
             )
+
+        # Set the map size
+        Clock.schedule_once(lambda _: self.resize_map())
+
+    def resize_map(self):
+        self.ids.map.size = 100, Window.size[1] - self.ids.center_panel.height + 40
+        print(f'{self.ids.map.size} is the new size of the map')
 
     def open_url(self):
         print("opened url")
