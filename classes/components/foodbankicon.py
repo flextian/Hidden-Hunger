@@ -14,12 +14,12 @@ class FoodbankIcon(MDCard):
         self.elevation = 10
 
         box_container = BoxLayout()
-        title = MDLabel(text=info[1], font_style="H6", halign="center", font_size=10)
+        title = MDLabel(text=info[1], font_style="H6", halign="center", font_size=9)
         distance = MDLabel(
             text=str(info[15]) + " Miles",
             font_style="H6",
             halign="center",
-            font_size=10,
+            font_size=9,
         )
         box_container.add_widget(title)
         box_container.add_widget(distance)

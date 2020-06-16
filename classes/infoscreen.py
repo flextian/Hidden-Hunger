@@ -66,6 +66,8 @@ class InfoScreen(Screen):
         self.ids.center_panel.ids.title_box.ids.title.text = self.info[1]
         self.ids.center_panel.ids.list_box.ids.address.text = self.info[2]
 
+        print(self.ids.center_panel.ids.buttons_box.ids.call_container.ids.call_button.size)
+
         day = datetime.datetime.today().weekday()
         day_name = [
             "Monday",
@@ -93,7 +95,7 @@ class InfoScreen(Screen):
         # TODO: Make the data table take up the width of the screen
         self.schedule_data = MDDataTable(
             size_hint=(0.9, 0.8),
-            column_data=[("Day", dp(20)), ("Hours", dp(30))],
+            column_data=[("Day", dp(20)), ("Hours", dp(35))],
             row_data=[
                 ("Monday", self.info[5]),
                 ("Tuesday", self.info[6]),

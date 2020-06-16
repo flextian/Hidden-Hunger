@@ -69,6 +69,7 @@
         theme_text_color: "Custom"
         text_color: app.theme_cls.primary_color
         on_release: app.root.get_screen('info_screen').open_url()
+        size: dp(54), dp(54)
 
     MDLabel:
         id: website_button_text
@@ -78,7 +79,6 @@
         text_color: app.theme_cls.primary_color
         halign: "center"
         bold: True
-
 #------------------------------------------------------------------------------
 
 <IconButtonCall@MDBoxLayout>
@@ -94,6 +94,7 @@
         theme_text_color: "Custom"
         text_color: app.theme_cls.primary_color
         on_release: app.root.get_screen('info_screen').call_number()
+        size: dp(54), dp(54)
 
     MDLabel:
         id: call_button_text
@@ -161,7 +162,7 @@
             icon: "history"
             on_release: app.root.get_screen('info_screen').open_schedule_data()
 
-#--------------------------------------------------------------------------------------------------------------------------------------------------------------
+#-----------------------------------------------------------------------------------------------------------------------
 
 <CenterPanel@MDBoxLayout>
     orientation: "vertical"
