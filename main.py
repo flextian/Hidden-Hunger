@@ -14,8 +14,8 @@ Builder.load_file("kvs/resultsscreen.kv")
 Factory.register("InfoScreen", module="classes.infoscreen")
 Builder.load_file("kvs/infoscreen.kv")
 
-os.environ['SSL_CERT_FILE'] = certifi.where()
-os.environ["PGEOCODE_DATA_DIR"] = 'pgeocode_data'
+os.environ["SSL_CERT_FILE"] = certifi.where()
+os.environ["PGEOCODE_DATA_DIR"] = "pgeocode_data"
 
 
 class UIManager(ScreenManager):

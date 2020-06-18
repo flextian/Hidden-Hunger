@@ -68,7 +68,9 @@ class InfoScreen(Screen):
         self.ids.center_panel.ids.title_box.ids.title.text = self.info[1]
         self.ids.center_panel.ids.list_box.ids.address.text = self.info[2]
 
-        print(self.ids.center_panel.ids.buttons_box.ids.call_container.ids.call_button.size)
+        print(
+            self.ids.center_panel.ids.buttons_box.ids.call_container.ids.call_button.size
+        )
 
         day = datetime.datetime.today().weekday()
         day_name = [
@@ -90,7 +92,7 @@ class InfoScreen(Screen):
             self.ids.center_panel.ids.information.text = self.info[14]
 
         self.ids.center_panel.ids.title_box.ids.distance.text = (
-                str(self.info[15]) + " Miles Away"
+            str(self.info[15]) + " Miles Away"
         )
 
         # Modify the schedule data table
@@ -121,8 +123,8 @@ class InfoScreen(Screen):
         self.map.zoom = 17
         box = self.map.get_bbox()
         while not (
-                box[0] < (self.info[12] and self.info[16]) < box[2]
-                and box[1] < (self.info[13] and self.info[17]) < box[3]
+            box[0] < (self.info[12] and self.info[16]) < box[2]
+            and box[1] < (self.info[13] and self.info[17]) < box[3]
         ):
             self.map.zoom -= 1
             box = self.map.get_bbox()
@@ -176,36 +178,36 @@ class InfoScreen(Screen):
         # Set the map size
         Clock.schedule_once(lambda _: self.resize_map())
 
-        print(self.info[3].replace('-', ''))
+        print(self.info[3].replace("-", ""))
 
     def resize_map(self):
         self.ids.map.size = 100, Window.size[1] - self.ids.center_panel.height + 40
-        print(f'{self.ids.map.size} is the new size of the map')
+        print(f"{self.ids.map.size} is the new size of the map")
 
     def open_url(self):
         print("opened url")
         webbrowser.open(self.url)
 
     def call_number(self):
-        PythonActivity = autoclass('org.kivy.android.PythonActivity')
-        Intent = autoclass('android.content.Intent')
-        Uri = autoclass('android.net.Uri')
+        PythonActivity = autoclass("org.kivy.android.PythonActivity")
+        Intent = autoclass("android.content.Intent")
+        Uri = autoclass("android.net.Uri")
 
         number = Uri.parse(f"tel:{self.info[3].replace('-', '')}")
         intent = Intent(Intent.ACTION_DIAL, number)
 
-        currentActivity = cast('android.app.Activity', PythonActivity.mActivity)
+        currentActivity = cast("android.app.Activity", PythonActivity.mActivity)
         currentActivity.startActivity(intent)
 
     def open_google_maps(self):
-        PythonActivity = autoclass('org.kivy.android.PythonActivity')
-        Intent = autoclass('android.content.Intent')
-        Uri = autoclass('android.net.Uri')
+        PythonActivity = autoclass("org.kivy.android.PythonActivity")
+        Intent = autoclass("android.content.Intent")
+        Uri = autoclass("android.net.Uri")
 
         location = Uri.parse(f'geo:0,0?q={self.info[2].replace(" ", "+")}')
         intent = Intent(Intent.ACTION_VIEW, location)
 
-        currentActivity = cast('android.app.Activity', PythonActivity.mActivity)
+        currentActivity = cast("android.app.Activity", PythonActivity.mActivity)
         currentActivity.startActivity(intent)
 
     def open_schedule_data(self):
