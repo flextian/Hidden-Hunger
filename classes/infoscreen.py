@@ -189,7 +189,7 @@ class InfoScreen(Screen):
         pass
 
     def open_google_maps(self):
-        PythonActivity = autoclass('org.renpy.android.PythonActivity')
+        PythonActivity = autoclass('org.kivy.android.PythonActivity')
         Intent = autoclass('android.content.Intent')
         Uri = autoclass('android.net.Uri')
 
