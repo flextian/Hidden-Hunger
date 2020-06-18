@@ -1,5 +1,6 @@
 import os
 import certifi
+from kivy.base import EventLoop
 from kivymd.app import MDApp
 from kivy.factory import Factory
 from kivy.lang import Builder
@@ -28,10 +29,24 @@ class HungerApp(MDApp):
     def __init__(self, **kwargs):
         super().__init__(**kwargs)
         self.row = None
+        self.manager = None
+        EventLoop.window.bind(on_keyboard=self.back_button_handler)
+
+    def back_button_handler(self, window, key, *args):
+        if key == 27:
+            if self.manager.current == 'info_screen':
+                self.manager.get_screen("info_screen").go_back()
+                return True
+            elif self.manager.current == 'results_screen':
+                self.manager.get_screen("results_screen").go_back()
+                return True
+            elif self.manager.current == 'main_screen':
+                return False
 
     def build(self):
         self.title = "Caring Cranes"
-        return UIManager()
+        self.manager = UIManager()
+        return self.manager
 
 
 if __name__ == "__main__":

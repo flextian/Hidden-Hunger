@@ -178,8 +178,6 @@ class InfoScreen(Screen):
         # Set the map size
         Clock.schedule_once(lambda _: self.resize_map())
 
-        print(self.info[3].replace("-", ""))
-
     def resize_map(self):
         self.ids.map.size = 100, Window.size[1] - self.ids.center_panel.height + 40
         print(f"{self.ids.map.size} is the new size of the map")
