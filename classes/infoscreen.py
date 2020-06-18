@@ -2,6 +2,8 @@ import datetime
 import math
 import webbrowser
 
+from jnius import autoclass
+from jnius.jnius import cast
 from kivy.clock import Clock
 from kivy.core.clipboard import Clipboard
 from kivy.core.window import Window
@@ -187,7 +189,15 @@ class InfoScreen(Screen):
         pass
 
     def open_google_maps(self):
-        pass
+        PythonActivity = autoclass('org.renpy.android.PythonActivity')
+        Intent = autoclass('android.content.Intent')
+        Uri = autoclass('android.net.Uri')
+
+        location = Uri.parse("geo:37.422219,-122.08364?z=14")
+        intent = Intent(Intent.ACTION_VIEW, location)
+
+        currentActivity = cast('android.app.Activity', PythonActivity.mActivity)
+        currentActivity.startActivity(intent)
 
     def open_schedule_data(self):
         self.schedule_data.open()
