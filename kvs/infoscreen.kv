@@ -24,8 +24,7 @@
 <OneLineItemAddress@OneLineAvatarListItem>
     icon: ""
     on_release:
-        Clipboard.copy(root.text)
-        Snackbar(text="Copied to Clipboard!").show()
+        app.root.get_screen('info_screen').open_google_maps()
 
     font_style: "Caption"
     height: "40dp"

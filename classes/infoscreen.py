@@ -183,7 +183,11 @@ class InfoScreen(Screen):
         webbrowser.open(self.url)
 
     def call_number(self):
-        self.phone_dialog.open()
+        # self.phone_dialog.open()
+        pass
+
+    def open_google_maps(self):
+        pass
 
     def open_schedule_data(self):
         self.schedule_data.open()

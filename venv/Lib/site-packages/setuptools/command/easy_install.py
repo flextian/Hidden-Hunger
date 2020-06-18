@@ -63,7 +63,7 @@ from pkg_resources import (
     Distribution, PathMetadata, EggMetadata, WorkingSet, DistributionNotFound,
     VersionConflict, DEVELOP_DIST,
 )
-import pkg_resources.py31compat
+import pkg_resources
 
 __metaclass__ = type
 
@@ -564,7 +564,7 @@ class easy_install(Command):
             if ok_exists:
                 os.unlink(ok_file)
             dirname = os.path.dirname(ok_file)
-            pkg_resources.py31compat.makedirs(dirname, exist_ok=True)
+            os.makedirs(dirname, exist_ok=True)
             f = open(pth_file, 'w')
         except (OSError, IOError):
             self.cant_write_to_target()
@@ -2072,17 +2072,38 @@ class ScriptWriter:
 
     template = textwrap.dedent(r"""
         # EASY-INSTALL-ENTRY-SCRIPT: %(spec)r,%(group)r,%(name)r
-        __requires__ = %(spec)r
         import re
         import sys
-        from pkg_resources import load_entry_point
+
+        # for compatibility with easy_install; see #2198
+        __requires__ = %(spec)r
+
+        try:
+            from importlib.metadata import distribution
+        except ImportError:
+            try:
+                from importlib_metadata import distribution
+            except ImportError:
+                from pkg_resources import load_entry_point
+
+
+        def importlib_load_entry_point(spec, group, name):
+            dist_name, _, _ = spec.partition('==')
+            matches = (
+                entry_point
+                for entry_point in distribution(dist_name).entry_points
+                if entry_point.group == group and entry_point.name == name
+            )
+            return next(matches).load()
+
+
+        globals().setdefault('load_entry_point', importlib_load_entry_point)
+
 
         if __name__ == '__main__':
             sys.argv[0] = re.sub(r'(-script\.pyw?|\.exe)?$', '', sys.argv[0])
-            sys.exit(
-                load_entry_point(%(spec)r, %(group)r, %(name)r)()
-            )
-    """).lstrip()
+            sys.exit(load_entry_point(%(spec)r, %(group)r, %(name)r)())
+        """).lstrip()
 
     command_spec_class = CommandSpec
 
