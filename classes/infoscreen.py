@@ -176,6 +176,8 @@ class InfoScreen(Screen):
         # Set the map size
         Clock.schedule_once(lambda _: self.resize_map())
 
+        print(self.info[3].replace('-', ''))
+
     def resize_map(self):
         self.ids.map.size = 100, Window.size[1] - self.ids.center_panel.height + 40
         print(f'{self.ids.map.size} is the new size of the map')
@@ -185,15 +187,22 @@ class InfoScreen(Screen):
         webbrowser.open(self.url)
 
     def call_number(self):
-        # self.phone_dialog.open()
-        pass
+        PythonActivity = autoclass('org.kivy.android.PythonActivity')
+        Intent = autoclass('android.content.Intent')
+        Uri = autoclass('android.net.Uri')
+
+        number = Uri.parse(f"tel:{self.info[3].replace('-', '')}")
+        intent = Intent(Intent.ACTION_DIAL, number)
+
+        currentActivity = cast('android.app.Activity', PythonActivity.mActivity)
+        currentActivity.startActivity(intent)
 
     def open_google_maps(self):
         PythonActivity = autoclass('org.kivy.android.PythonActivity')
         Intent = autoclass('android.content.Intent')
         Uri = autoclass('android.net.Uri')
 
-        location = Uri.parse("geo:37.422219,-122.08364?z=14")
+        location = Uri.parse(f'geo:0,0?q={self.info[2].replace(" ", "+")}')
         intent = Intent(Intent.ACTION_VIEW, location)
 
         currentActivity = cast('android.app.Activity', PythonActivity.mActivity)
