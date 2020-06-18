@@ -1,0 +1,6 @@
+.idea/
+__pycache__/
+cache/
+classes/__pycache__/
+classes/components/__pycache__/
+venv/
