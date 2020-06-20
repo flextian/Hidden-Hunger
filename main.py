@@ -6,8 +6,6 @@ from kivy.factory import Factory
 from kivy.lang import Builder
 from kivy.uix.screenmanager import ScreenManager, FadeTransition
 
-# TODO: redirects for phone and maps, back button
-
 Factory.register("MainScreen", module="classes.mainscreen")
 Builder.load_file("kvs/mainscreen.kv")
 Factory.register("ResultsScreen", module="classes.resultsscreen")

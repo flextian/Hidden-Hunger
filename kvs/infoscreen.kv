@@ -18,9 +18,19 @@
     theme_text_color: "Custom"
     text_color: app.theme_cls.primary_color
     pos_hint: {"center_y": .5}
+    on_release:
+        pass
+
+<IconRight@IconRightWidget>
+    icon: root.icon
+    theme_text_color: "Custom"
+    text_color: app.theme_cls.primary_color
+    pos_hint: {"center_y": .5}
+    on_release:
+        pass
 
 #------------------------------------------------------------------------------
-
+# OneLineAvatarIconListItem - is if you add a right icon
 <OneLineItemAddress@OneLineAvatarListItem>
     icon: ""
     on_release:
@@ -32,9 +42,17 @@
 
     IconLeft:
         icon: root.icon
+        on_release:
+            app.root.get_screen('info_screen').open_google_maps()
+
+#    IconRight:
+#       icon: "arrow-up-circle-outline"
+#       on_release:
+#           app.root.get_screen('info_screen').open_google_maps()
 
 #------------------------------------------------------------------------------
 
+# OneLineAvatarIconListItem - is if you add a right icon
 <OneLineItemHours@OneLineAvatarListItem>
     icon: ""
     font_style: "Caption"
@@ -43,6 +61,13 @@
 
     IconLeft:
         icon: root.icon
+        on_release:
+            app.root.get_screen('info_screen').open_schedule_data()
+
+#    IconRight:
+#        icon: "arrow-up-circle-outline"
+#        on_release:
+#            app.root.get_screen('info_screen').open_schedule_data()
 
 #------------------------------------------------------------------------------
 
