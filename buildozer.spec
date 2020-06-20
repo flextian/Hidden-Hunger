@@ -1,10 +1,10 @@
 [app]
 
 # (str) Title of your application
-title = Hidden_Hunger
+title = Caring Cranes
 
 # (str) Package name
-package.name = Hidden_hunger
+package.name = CaringCranes
 
 # (str) Package domain (needed for android/ios packaging)
 package.domain = org.test
@@ -46,10 +46,10 @@ requirements = python3,kivy,kivymd,pgeocode,mysql-connector,datetime,mapview,num
 #garden_requirements = mapview
 
 # (str) Presplash of the application
-#presplash.filename = %(source.dir)s/data/presplash.png
+presplash.filename = presplash.png
 
 # (str) Icon of the application
-#icon.filename = %(source.dir)s/data/icon.png
+icon.filename = icon.png
 
 # (str) Supported orientation (one of landscape, sensorLandscape, portrait or all)
 orientation = portrait
@@ -82,7 +82,7 @@ fullscreen = 0
 # red, blue, green, black, white, gray, cyan, magenta, yellow, lightgray,
 # darkgray, grey, lightgrey, darkgrey, aqua, fuchsia, lime, maroon, navy,
 # olive, purple, silver, teal.
-#android.presplash_color = #FFFFFF
+#android.presplash_color = white
 
 # (list) Permissions
 android.permissions = INTERNET,WRITE_EXTERNAL_STORAGE,READ_EXTERNAL_STORAGE
