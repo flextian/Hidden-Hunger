@@ -1,10 +1,10 @@
 [app]
 
 # (str) Title of your application
-title = Caring Cranes
+title = Hidden Hunger
 
 # (str) Package name
-package.name = CaringCranes
+package.name = hiddenhunger
 
 # (str) Package domain (needed for android/ios packaging)
 package.domain = org.test
@@ -82,7 +82,7 @@ fullscreen = 0
 # red, blue, green, black, white, gray, cyan, magenta, yellow, lightgray,
 # darkgray, grey, lightgrey, darkgrey, aqua, fuchsia, lime, maroon, navy,
 # olive, purple, silver, teal.
-#android.presplash_color = white
+android.presplash_color = white
 
 # (list) Permissions
 android.permissions = INTERNET,WRITE_EXTERNAL_STORAGE,READ_EXTERNAL_STORAGE
