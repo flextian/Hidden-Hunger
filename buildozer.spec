@@ -7,7 +7,7 @@ title = Hidden Hunger
 package.name = hiddenhunger
 
 # (str) Package domain (needed for android/ios packaging)
-package.domain = org.test
+package.domain = org.caringcranes
 
 # (str) Source code where the main.py live
 source.dir = .
