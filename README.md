@@ -1,6 +1,10 @@
 # Hidden Hunger
-###### By [Caring Cranes](https://www.caringcranes.org/)
+
+<div style="text-align:center">
+<h6>By <a href="https://www.caringcranes.org/">Caring Cranes</a></h6>
 <img src="readme_images/caring_cranes.webp" alt="Caring Cranes logo" width="200"/>
+</div>
+
 
 ## Table of Contents
   * [Overview](#overview)
