@@ -22,7 +22,7 @@ Smaller food organizations, often overshadowed by large food banks, find it diff
 <img src="readme_images/part4.webp" alt="Caring Cranes screenshot" width="200"/>
 </div>
 
-Currently, Hidden Hunger only has a working directory in the immediate Tri-State Area. We are continuing to expand our ever-growing database with registered food organizations.
+Currently, Hidden Hunger only has a working directory in the immediate Tri-State Area. We are continuing to expand our ever-growing database with registered food organizations, and working to port the app to IOS.
 
 ## Installation
 
