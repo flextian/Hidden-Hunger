@@ -1,14 +1,15 @@
 # Hidden Hunger
 
-<p align="center">
 <h6>By <a href="https://www.caringcranes.org/">Caring Cranes</a></h6>
-<img src="readme_images/caring_cranes.webp" alt="Caring Cranes logo" width="200"/>
-</p>
+<img src="readme_images/caring_cranes.webp" alt="Caring Cranes logo" width="400"/>
+
+Inspired by the obscurity of smaller scale food organizations, Caring Cranes has decided to build Hidden Hunger to aid users in finding a food organization near their personal location.
 
 ## Table of Contents
   * [Overview](#overview)
   * [Installation](#installation)
   * [Sources](#sources)
+  * [License](#license)
 
 ## Overview
 
@@ -25,4 +26,19 @@ Currently, Hidden Hunger only has a working directory in the immediate Tri-State
 
 ## Installation
 
+1. Clone or download this repository.
+2. Ensure you have pip, wheel, setuptools, and virtualenv in the latest version. `python3 -m pip install --upgrade pip wheel setuptools virtualenv`
+3. Create a virtual environment in your terminal `virtualenv venv`.
+4. Activate it `source venv/bin/activate` or `venv\Scripts\activate` for windows.
+5. Install [Kivy](https://kivy.org/doc/stable/gettingstarted/installation.html) for your respective operating system. 
+5. Navigate to where `requirements.txt` is and `pip install -r requirements.txt`.
+6. `python3 main.py` to run project.
+
 ## Sources
+
+Person Map Marker Icon made by Kiranshastry from [www.flaticon.com](https://www.flaticon.com/free-icon/navigation_876335?term=location%20person&page=3&position=8)
+
+Food Bank Map Marker Icon made by Those Icons from [www.flaticon.com](https://www.flaticon.com/free-icon/pin_526780?term=map&page=1&position=83)
+
+## License
+
