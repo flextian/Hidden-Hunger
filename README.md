@@ -9,7 +9,6 @@ Inspired by the obscurity of smaller scale food organizations, Caring Cranes has
   * [Overview](#overview)
   * [Installation](#installation)
   * [Sources](#sources)
-  * [License](#license)
 
 ## Overview
 
@@ -39,6 +38,3 @@ Currently, Hidden Hunger only has a working directory in the immediate Tri-State
 Person Map Marker Icon made by Kiranshastry from [www.flaticon.com](https://www.flaticon.com/free-icon/navigation_876335?term=location%20person&page=3&position=8)
 
 Food Bank Map Marker Icon made by Those Icons from [www.flaticon.com](https://www.flaticon.com/free-icon/pin_526780?term=map&page=1&position=83)
-
-## License
-
