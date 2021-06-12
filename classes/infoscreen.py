@@ -2,8 +2,12 @@ import datetime
 import math
 import webbrowser
 
-from jnius import autoclass
-from jnius.jnius import cast
+try:
+    from jnius import autoclass
+    from jnius.jnius import cast
+except Exception as e:
+    print('on pc')
+
 from kivy.clock import Clock
 from kivy.core.clipboard import Clipboard
 from kivy.core.window import Window
