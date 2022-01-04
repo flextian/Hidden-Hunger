@@ -39,7 +39,7 @@ version = 0.2
 requirements = python3,kivy==2.0.0,pillow,kivymd,pgeocode,mysql-connector,datetime,mapview,numpy,pandas,requests,certifi,urllib3,chardet,idna
 
 # (str) Custom source folders for requirements
-# Sets custom source for any requirements with r,mysql ecipes
+# Sets custom source for any requirements with recipes
 # requirements.source.kivy = ../../kivy
 
 # (list) Garden requirements
