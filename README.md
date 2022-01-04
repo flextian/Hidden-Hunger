@@ -1,6 +1,6 @@
 # Hidden Hunger
 
-<h6>Caring Cranes</h6>
+<h6>By Caring Cranes</h6>
 <img src="readme_images/caring_cranes.webp" alt="Caring Cranes logo" width="400"/>
 
 Inspired by the obscurity of smaller scale food organizations, Caring Cranes has decided to build Hidden Hunger to aid users in finding a food organization near their personal location.
