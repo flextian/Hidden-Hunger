@@ -133,7 +133,7 @@ class MainScreen(Screen):
 
         if offline:
             connection_error_label = MDLabel(
-                text="No Internet, results are limited", halign="center"
+                text="No database connection, results are limited", halign="center"
             )
             icon_scroller.add_widget(connection_error_label)
 
