@@ -74,6 +74,8 @@ class MainScreen(Screen):
         self.zip_code_latitude = zip_code_latitude
         self.zip_code_longitude = zip_code_longitude
 
+        offline = False
+
         # Connect to database
         try:
             connection = mysql.connector.connect(
@@ -87,12 +89,22 @@ class MainScreen(Screen):
             cursor.execute(query)
             records = cursor.fetchall()
         except mysql.connector.Error as err:
+            # If no internet or database offline
             if err.errno == errorcode.CR_CONN_HOST_ERROR:
-                connection_error_label = MDLabel(
-                    text="No Internet Connection!", halign="center"
-                )
-                icon_scroller.add_widget(connection_error_label)
-                return
+                offline = True
+                records = [[1, "Project Paul", "211 Carr Ave, Keansburg, NJ 07734", "732-787-4887",
+                            "https://www.projpaul.org/", None, None,
+                            "9:45AM - 11:45AM", None, "12:45PM - 2:45PM", None, None, 40.44761, -74.13338,
+                            "Kitchen staples, baby food, coffee and other essentials."],
+                           [2, "St. Edward Food Pantry", "6581 Hylan Blvd, Staten Island, NY 10309", "718-984-1625",
+                            "https://www.nycservice.org/organizations/index.php?org_id=1154", "10:00AM - 1:00PM", None,
+                            "10:00AM - 1:00PM", None, None, "10:00AM - 1:00PM", None, 40.51267, -74.20798,
+                            "St. Edward Food Pantry has been feeding those in need since 1928, starting as a Ministry"
+                            + " of the Franciscan Handmaids of Mary. Families come to our Food Pantry from across "
+                            + "Staten Island as well as the outer boroughs. St. Edward Food Pantry serves anyone in "
+                            + "need of food and does not discriminate against against anyone irregardless of their "
+                            + "race, religion, gender, age, sexual preferences, etc. All persons are served."],
+                           ]
             else:
                 raise
 
@@ -119,6 +131,12 @@ class MainScreen(Screen):
             no_results_label = MDLabel(text="No Results Found!", halign="center")
             icon_scroller.add_widget(no_results_label)
 
+        if offline:
+            connection_error_label = MDLabel(
+                text="No Internet, results are limited", halign="center"
+            )
+            icon_scroller.add_widget(connection_error_label)
+
         self.create_zip_code_marker()
 
     def calculate_distance(self, row, latitude, longitude):
@@ -137,8 +155,8 @@ class MainScreen(Screen):
         dlambda = math.radians(lon2 - lon1)
 
         a = (
-            math.sin(dphi / 2) ** 2
-            + math.cos(phi1) * math.cos(phi2) * math.sin(dlambda / 2) ** 2
+                math.sin(dphi / 2) ** 2
+                + math.cos(phi1) * math.cos(phi2) * math.sin(dlambda / 2) ** 2
         )
 
         return 2 * R * math.atan2(math.sqrt(a), math.sqrt(1 - a))
