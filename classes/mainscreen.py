@@ -59,6 +59,7 @@ class MainScreen(Screen):
         icon_scroller = self.manager.get_screen("results_screen").ids.bank_icons
 
         # Get zip code data and check if valid
+        print("getting zip codes")
         zip_to_coords = pgeocode.Nominatim("us")
         zip_code_latitude = float(
             zip_to_coords.query_postal_code(self.zip_code).get("latitude")
@@ -78,11 +79,13 @@ class MainScreen(Screen):
 
         # Connect to database
         try:
+            print("trying to connect to DB")
             connection = mysql.connector.connect(
                 host="foodbanks.cnwqm1nc27hx.us-east-2.rds.amazonaws.com",
                 database="foodbanks",
                 user="app_user",
                 passwd="password",
+                connection_timeout=3
             )
             query = "select * from foodbanks"
             cursor = connection.cursor()
@@ -91,6 +94,7 @@ class MainScreen(Screen):
         except mysql.connector.Error as err:
             # If no internet or database offline
             if err.errno == errorcode.CR_CONN_HOST_ERROR:
+                print("we are offline")
                 offline = True
                 records = [[1, "Project Paul", "211 Carr Ave, Keansburg, NJ 07734", "732-787-4887",
                             "https://www.projpaul.org/", None, None,
